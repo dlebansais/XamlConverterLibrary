@@ -85,6 +85,8 @@
                 IntValue = 0;
             else if (value.GetType().IsEnum)
                 IntValue = (int)value;
+            else if (value is IEnumerable AsEnumerable)
+                IntValue = AsEnumerable.GetEnumerator().MoveNext() ? 1 : 0;
             else
                 throw new ArgumentOutOfRangeException(nameof(value));
 
