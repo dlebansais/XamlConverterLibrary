@@ -1,6 +1,7 @@
 ﻿namespace Converters
 {
     using System;
+    using System.Collections;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Windows.Data;
@@ -43,7 +44,7 @@
         /// </returns>
         public static object Convert(object? value, object parameter)
         {
-            if (value == null && parameter is CompositeCollection CollectionOfThreeItems && CollectionOfThreeItems.Count > 2)
+            if (value == null && parameter is IList CollectionOfThreeItems && CollectionOfThreeItems.Count > 2)
                 return CollectionOfThreeItems[2];
 
             bool BooleanValue;
@@ -55,7 +56,7 @@
             else
                 throw new ArgumentOutOfRangeException(nameof(value));
 
-            if (parameter is CompositeCollection CollectionOfItems && CollectionOfItems.Count > 1)
+            if (parameter is IList CollectionOfItems && CollectionOfItems.Count > 1)
                 return BooleanValue ? CollectionOfItems[1] : CollectionOfItems[0];
             else
                 throw new ArgumentOutOfRangeException(nameof(parameter));
@@ -71,9 +72,9 @@
         /// <returns>A converted value.</returns>
         public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (parameter is CompositeCollection CollectionOfThreeItems && CollectionOfThreeItems.Count > 2 && value == CollectionOfThreeItems[2])
+            if (parameter is IList CollectionOfThreeItems && CollectionOfThreeItems.Count > 2 && value == CollectionOfThreeItems[2])
                 return null;
-            else if (parameter is CompositeCollection CollectionOfItems && CollectionOfItems.Count > 1)
+            else if (parameter is IList CollectionOfItems && CollectionOfItems.Count > 1)
                 return value == CollectionOfItems[1];
             else
                 throw new ArgumentOutOfRangeException(nameof(parameter));

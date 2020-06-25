@@ -4,6 +4,7 @@
     using System.Globalization;
     using System.Windows.Data;
     using System.Diagnostics.CodeAnalysis;
+    using System.Collections;
 
     /// <summary>
     /// Converter from a reference to the first or second object of a collection.
@@ -43,7 +44,7 @@
         {
             bool NullValue = value == null;
 
-            if (parameter is CompositeCollection CollectionOfItems && CollectionOfItems.Count > 1)
+            if (parameter is IList CollectionOfItems && CollectionOfItems.Count > 1)
                 return NullValue ? CollectionOfItems[0] : CollectionOfItems[1];
             else
                 throw new ArgumentOutOfRangeException(nameof(parameter));
@@ -59,7 +60,7 @@
         /// <returns>A converted value.</returns>
         public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (parameter is CompositeCollection CollectionOfItems && CollectionOfItems.Count > 1)
+            if (parameter is IList CollectionOfItems && CollectionOfItems.Count > 1)
                 return value == CollectionOfItems[1] ? BindingOperations.DisconnectedSource : null;
             else
                 throw new ArgumentOutOfRangeException(nameof(parameter));
