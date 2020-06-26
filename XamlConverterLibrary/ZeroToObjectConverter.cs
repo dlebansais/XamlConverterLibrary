@@ -83,6 +83,8 @@
                 IntValue = (int)(((ulong?)value) ?? 0);
             else if (value == null)
                 IntValue = 0;
+            else if (value is string AsString)
+                IntValue = AsString.Length;
             else if (value.GetType().IsEnum)
                 IntValue = (int)value;
             else if (value is IEnumerable AsEnumerable)
