@@ -1,10 +1,10 @@
 ﻿namespace Converters
 {
     using System;
+    using System.Collections;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Windows.Data;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Collections;
 
     /// <summary>
     /// Converter from a reference to the first or second object of a collection.
