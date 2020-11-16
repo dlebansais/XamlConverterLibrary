@@ -5,6 +5,7 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Windows.Data;
+    using Contracts;
 
     /// <summary>
     /// Converter from a boolean or nullable boolean to the first or second object of a collection.
@@ -45,7 +46,10 @@
         public static object Convert(object? value, object parameter)
         {
             if (value == null && parameter is IList CollectionOfThreeItems && CollectionOfThreeItems.Count > 2)
-                return CollectionOfThreeItems[2];
+            {
+                Contract.RequireNotNull(CollectionOfThreeItems[2], out object Item);
+                return Item;
+            }
 
             bool BooleanValue;
 
@@ -57,7 +61,10 @@
                 throw new ArgumentOutOfRangeException(nameof(value));
 
             if (parameter is IList CollectionOfItems && CollectionOfItems.Count > 1)
-                return BooleanValue ? CollectionOfItems[1] : CollectionOfItems[0];
+            {
+                Contract.RequireNotNull(BooleanValue ? CollectionOfItems[1] : CollectionOfItems[0], out object Item);
+                return Item;
+            }
             else
                 throw new ArgumentOutOfRangeException(nameof(parameter));
         }

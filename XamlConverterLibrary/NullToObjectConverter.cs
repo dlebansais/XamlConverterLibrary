@@ -5,6 +5,7 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Windows.Data;
+    using Contracts;
 
     /// <summary>
     /// Converter from a reference to the first or second object of a collection.
@@ -45,7 +46,10 @@
             bool NullValue = value == null;
 
             if (parameter is IList CollectionOfItems && CollectionOfItems.Count > 1)
-                return NullValue ? CollectionOfItems[0] : CollectionOfItems[1];
+            {
+                Contract.RequireNotNull(NullValue ? CollectionOfItems[0] : CollectionOfItems[1], out object Item);
+                return Item;
+            }
             else
                 throw new ArgumentOutOfRangeException(nameof(parameter));
         }
