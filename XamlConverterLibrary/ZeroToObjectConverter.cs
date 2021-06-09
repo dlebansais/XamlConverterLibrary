@@ -54,7 +54,8 @@
             int IntValue;
 
             if (!ConvertValueFromNumeric(value, out IntValue) &&
-                !ConvertValueFromNullableNumeric(value, out IntValue) &&
+                !ConvertValueFromNullableSmallNumeric(value, out IntValue) &&
+                !ConvertValueFromNullableLargeNumeric(value, out IntValue) &&
                 !ConvertValueFromOtherTypes(value, out IntValue))
                 throw new ArgumentOutOfRangeException(nameof(value));
 
@@ -94,11 +95,9 @@
             return true;
         }
 
-        private static bool ConvertValueFromNullableNumeric(object? value, out int intValue)
+        private static bool ConvertValueFromNullableSmallNumeric(object? value, out int intValue)
         {
-            if (value is int?)
-                intValue = ((int?)value) ?? 0;
-            else if (value is byte?)
+            if (value is byte?)
                 intValue = ((byte?)value) ?? 0;
             else if (value is sbyte?)
                 intValue = ((sbyte?)value) ?? 0;
@@ -106,6 +105,19 @@
                 intValue = ((short?)value) ?? 0;
             else if (value is ushort?)
                 intValue = ((ushort?)value) ?? 0;
+            else
+            {
+                intValue = 0;
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool ConvertValueFromNullableLargeNumeric(object? value, out int intValue)
+        {
+            if (value is int?)
+                intValue = ((int?)value) ?? 0;
             else if (value is uint?)
                 intValue = (int)(((uint?)value) ?? 0);
             else if (value is long?)
