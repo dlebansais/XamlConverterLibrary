@@ -53,47 +53,9 @@
 
             int IntValue;
 
-            if (value is int)
-                IntValue = (int)value;
-            else if (value is byte)
-                IntValue = (byte)value;
-            else if (value is sbyte)
-                IntValue = (sbyte)value;
-            else if (value is short)
-                IntValue = (short)value;
-            else if (value is ushort)
-                IntValue = (ushort)value;
-            else if (value is uint)
-                IntValue = (int)(uint)value;
-            else if (value is long)
-                IntValue = (int)(long)value;
-            else if (value is ulong)
-                IntValue = (int)(ulong)value;
-            else if (value is int?)
-                IntValue = ((int?)value) ?? 0;
-            else if (value is byte?)
-                IntValue = ((byte?)value) ?? 0;
-            else if (value is sbyte?)
-                IntValue = ((sbyte?)value) ?? 0;
-            else if (value is short?)
-                IntValue = ((short?)value) ?? 0;
-            else if (value is ushort?)
-                IntValue = ((ushort?)value) ?? 0;
-            else if (value is uint?)
-                IntValue = (int)(((uint?)value) ?? 0);
-            else if (value is long?)
-                IntValue = (int)(((long?)value) ?? 0);
-            else if (value is ulong?)
-                IntValue = (int)(((ulong?)value) ?? 0);
-            else if (value == null)
-                IntValue = 0;
-            else if (value is string AsString)
-                IntValue = AsString.Length;
-            else if (value.GetType().IsEnum)
-                IntValue = (int)value;
-            else if (value is IEnumerable AsEnumerable)
-                IntValue = AsEnumerable.GetEnumerator().MoveNext() ? 1 : 0;
-            else
+            if (!ConvertValueFromNumeric(value, out IntValue) &&
+                !ConvertValueFromNullableNumeric(value, out IntValue) &&
+                !ConvertValueFromOtherTypes(value, out IntValue))
                 throw new ArgumentOutOfRangeException(nameof(value));
 
             if (parameter is IList CollectionOfItems && CollectionOfItems.Count > 1)
@@ -103,6 +65,79 @@
             }
             else
                 throw new ArgumentOutOfRangeException(nameof(parameter));
+        }
+
+        private static bool ConvertValueFromNumeric(object? value, out int intValue)
+        {
+            if (value is int)
+                intValue = (int)value;
+            else if (value is byte)
+                intValue = (byte)value;
+            else if (value is sbyte)
+                intValue = (sbyte)value;
+            else if (value is short)
+                intValue = (short)value;
+            else if (value is ushort)
+                intValue = (ushort)value;
+            else if (value is uint)
+                intValue = (int)(uint)value;
+            else if (value is long)
+                intValue = (int)(long)value;
+            else if (value is ulong)
+                intValue = (int)(ulong)value;
+            else
+            {
+                intValue = 0;
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool ConvertValueFromNullableNumeric(object? value, out int intValue)
+        {
+            if (value is int?)
+                intValue = ((int?)value) ?? 0;
+            else if (value is byte?)
+                intValue = ((byte?)value) ?? 0;
+            else if (value is sbyte?)
+                intValue = ((sbyte?)value) ?? 0;
+            else if (value is short?)
+                intValue = ((short?)value) ?? 0;
+            else if (value is ushort?)
+                intValue = ((ushort?)value) ?? 0;
+            else if (value is uint?)
+                intValue = (int)(((uint?)value) ?? 0);
+            else if (value is long?)
+                intValue = (int)(((long?)value) ?? 0);
+            else if (value is ulong?)
+                intValue = (int)(((ulong?)value) ?? 0);
+            else
+            {
+                intValue = 0;
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool ConvertValueFromOtherTypes(object? value, out int intValue)
+        {
+            if (value == null)
+                intValue = 0;
+            else if (value is string AsString)
+                intValue = AsString.Length;
+            else if (value.GetType().IsEnum)
+                intValue = (int)value;
+            else if (value is IEnumerable AsEnumerable)
+                intValue = AsEnumerable.GetEnumerator().MoveNext() ? 1 : 0;
+            else
+            {
+                intValue = 0;
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
