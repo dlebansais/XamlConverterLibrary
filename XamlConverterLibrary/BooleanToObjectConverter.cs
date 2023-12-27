@@ -8,24 +8,24 @@ using System.Windows.Data;
 using Contracts;
 
 /// <summary>
-/// Converter from a boolean or nullable boolean to the first or second object of a collection.
+/// Converter from a boolean or nullable boolean to an item in a collection.
 /// </summary>
 [ValueConversion(typeof(bool), typeof(object))]
 [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Instanciated in Xaml")]
 public class BooleanToObjectConverter : IValueConverter
 {
     /// <summary>
-    /// Converter from a boolean or nullable boolean to the first or second object of a collection.
+    /// Converter from a boolean to the first or second object of a collection.
+    /// Converter from a nullable boolean to the first, second or third object of a collection.
     /// </summary>
-    /// <param name="value">The value produced by the binding source.</param>
-    /// <param name="targetType">The type of the binding target property.</param>
-    /// <param name="parameter">The converter parameter to use.</param>
-    /// <param name="culture">The culture to use in the converter.</param>
+    /// <param name="value">The value produced by the binding source. The type of <paramref name="value"/> must be either <see cref="bool"/> or <see cref="Nullable{Boolean}"/>.</param>
+    /// <param name="targetType">The type of the binding target property (ignored).</param>
+    /// <param name="parameter">The converter parameter to use. It must be a collection of objects containing at least two items.</param>
+    /// <param name="culture">The culture to use in the converter (ignored).</param>
     /// <returns>
-    /// If <paramref name="parameter"/> is a collection with at least three objects, and <paramref name="value"/> is null, returns the 3rd item.
-    /// Otherwise, If <paramref name="value"/> is a bool and equal to True, or a bool? and also equal to true, and <paramref name="parameter"/> is a collection with at least two objects, the converter returns the second object in the collection.
-    /// Otherwise, if the collection has at least two objects, the converter returns the first object in the collection.
-    /// Otherwise, this method throws an exception.
+    /// If <paramref name="parameter"/> is a collection with at least three items, and <paramref name="value"/> is <see langword="null"/>, returns the third item.
+    /// Otherwise, if <paramref name="value"/> is <see langword="true"/>, returns the second item in the collection.
+    /// Otherwise, returns the first item in the collection.
     /// </returns>
     public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -33,57 +33,79 @@ public class BooleanToObjectConverter : IValueConverter
     }
 
     /// <summary>
-    /// Converter from a boolean or nullable boolean to the first or second object of a collection.
+    /// Converter from a boolean to the first or second object of a collection.
+    /// Converter from a nullable boolean to the first, second or third object of a collection.
     /// </summary>
-    /// <param name="value">The value produced by the binding source.</param>
-    /// <param name="parameter">The converter parameter to use.</param>
+    /// <param name="value">The value produced by the binding source. The type of <paramref name="value"/> must be either <see cref="bool"/> or <see cref="Nullable{Boolean}"/>.</param>
+    /// <param name="parameter">The converter parameter to use. It must be a collection of objects containing at least two items.</param>
     /// <returns>
-    /// If <paramref name="parameter"/> is a collection with at least three objects, and <paramref name="value"/> is null, returns the 3rd item.
-    /// Otherwise, If <paramref name="value"/> is a bool and equal to True, or a bool? and also equal to true, and <paramref name="parameter"/> is a collection with at least two objects, the converter returns the second object in the collection.
-    /// Otherwise, if the collection has at least two objects, the converter returns the first object in the collection.
-    /// Otherwise, this method throws an exception.
+    /// If <paramref name="parameter"/> is a collection with at least three items, and <paramref name="value"/> is <see langword="null"/>, returns the third item.
+    /// Otherwise, if <paramref name="value"/> is <see langword="true"/>, returns the second item in the collection.
+    /// Otherwise, returns the first item in the collection.
     /// </returns>
     public static object Convert(object? value, object parameter)
     {
-        if (value is null && parameter is IList CollectionOfThreeItems && CollectionOfThreeItems.Count > 2)
+        Contract.RequireNotNull(parameter, out IList Items);
+        Contract.Require(Items.Count >= 2);
+
+        if (value is null)
         {
-            Contract.RequireNotNull(CollectionOfThreeItems[2], out object Item);
-            return Item;
-        }
+            int Index = Items.Count > 2 ? 2 : 0;
 
-        bool BooleanValue;
+            Contract.RequireNotNull(Items[Index], out object Item);
 
-        if (value is bool)
-            BooleanValue = (bool)value;
-        else if (value is bool?)
-            BooleanValue = ((bool?)value) ?? false;
-        else
-            throw new ArgumentOutOfRangeException(nameof(value));
-
-        if (parameter is IList CollectionOfItems && CollectionOfItems.Count > 1)
-        {
-            Contract.RequireNotNull(BooleanValue ? CollectionOfItems[1] : CollectionOfItems[0], out object Item);
             return Item;
         }
         else
-            throw new ArgumentOutOfRangeException(nameof(parameter));
+        {
+            Contract.Require(value.GetType() == typeof(bool));
+
+            bool BooleanValue = (bool)value;
+
+            Contract.RequireNotNull(BooleanValue ? Items[1] : Items[0], out object Item);
+
+            return Item;
+        }
     }
 
     /// <summary>
     /// Converts an object to a <see cref="bool"/> instance in a binding.
     /// </summary>
     /// <param name="value">The value that is produced by the binding target.</param>
-    /// <param name="targetType">The type to convert to.</param>
+    /// <param name="targetType">The type to convert to. Must be either <see cref="bool"/> or <see cref="Nullable{Boolean}"/>.</param>
     /// <param name="parameter">The converter parameter to use.</param>
-    /// <param name="culture">The culture to use in the converter.</param>
-    /// <returns>A converted value.</returns>
+    /// <param name="culture">The culture to use in the converter (ignored).</param>
+    /// <returns>
+    /// If <paramref name="parameter"/> is a collection with at least three items, and <paramref name="value"/> is equal to the third item in the collection, returns <see langword="null"/>.
+    /// Otherwise, if <paramref name="value"/> is equal to the second item in the collection, returns <see langword="true"/>.
+    /// Otherwise, returns <see langword="false"/>.
+    /// </returns>
     public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (parameter is IList CollectionOfThreeItems && CollectionOfThreeItems.Count > 2 && value == CollectionOfThreeItems[2])
+        Contract.Require(targetType == typeof(bool) || targetType == typeof(bool?));
+
+        return ConvertBack(value, parameter);
+    }
+
+    /// <summary>
+    /// Converts an object to a <see cref="bool"/> instance in a binding.
+    /// </summary>
+    /// <param name="value">The value that is produced by the binding target.</param>
+    /// <param name="parameter">The converter parameter to use.</param>
+    /// <returns>
+    /// If <paramref name="parameter"/> is a collection with at least three items, and <paramref name="value"/> is equal to the third item in the collection, returns <see langword="null"/>.
+    /// Otherwise, if <paramref name="value"/> is equal to the second item in the collection, returns <see langword="true"/>.
+    /// Otherwise, returns <see langword="false"/>.
+    /// </returns>
+    public static object? ConvertBack(object value, object parameter)
+    {
+        Contract.RequireNotNull(value, out object Value);
+        Contract.RequireNotNull(parameter, out IList Items);
+        Contract.Require(Items.Count >= 2);
+
+        if (Items.Count > 2 && Value.Equals(Items[2]))
             return null;
-        else if (parameter is IList CollectionOfItems && CollectionOfItems.Count > 1)
-            return value == CollectionOfItems[1];
         else
-            throw new ArgumentOutOfRangeException(nameof(parameter));
+            return Value.Equals(Items[1]);
     }
 }

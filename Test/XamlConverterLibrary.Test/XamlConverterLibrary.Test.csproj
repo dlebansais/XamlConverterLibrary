@@ -41,4 +41,10 @@
         <ProjectReference Include="..\..\XamlConverterLibrary\XamlConverterLibrary.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Tools\BooleanToObjectConverterTestConvertBackWindow.xaml.cs">
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+
 </Project>

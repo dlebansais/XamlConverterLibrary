@@ -1,0 +1,27 @@
+﻿<Window x:Class="XamlConverterLibrary.Test.BooleanToObjectConverterTestConvertBackWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:conv="clr-namespace:Converters;assembly=XamlConverterLibrary">
+    <Window.Resources>
+        <conv:BooleanToObjectConverter x:Key="convBooleanToObject"/>
+        <conv:NullToObjectConverter x:Key="convNullToObject"/>
+        <conv:ZeroToObjectConverter x:Key="convZeroToObject"/>
+        <CompositeCollection x:Key="VisibleCollapsed">
+            <sys:String>Visible</sys:String>
+            <sys:String>Collapsed</sys:String>
+        </CompositeCollection>
+        <CompositeCollection x:Key="VisibleCollapsedVisible">
+            <sys:String>Visible</sys:String>
+            <sys:String>Collapsed</sys:String>
+            <sys:String>Visible</sys:String>
+        </CompositeCollection>
+    </Window.Resources>
+    <Grid>
+        <TextBox x:Name="BoolPropertyTrue" Text="{Binding BoolPropertyTrue, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource convBooleanToObject}, ConverterParameter={StaticResource VisibleCollapsed}}"/>
+        <TextBox x:Name="BoolPropertyFalse" Text="{Binding BoolPropertyFalse, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource convBooleanToObject}, ConverterParameter={StaticResource VisibleCollapsed}}"/>
+        <TextBox x:Name="NullableBoolProperty" Text="{Binding NullableBoolProperty, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource convBooleanToObject}, ConverterParameter={StaticResource VisibleCollapsedVisible}}"/>
+        <TextBox x:Name="NullableBoolPropertyTrue" Text="{Binding NullableBoolPropertyTrue, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource convBooleanToObject}, ConverterParameter={StaticResource VisibleCollapsedVisible}}"/>
+        <TextBox x:Name="NullableBoolPropertyFalse" Text="{Binding NullableBoolPropertyFalse, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource convBooleanToObject}, ConverterParameter={StaticResource VisibleCollapsedVisible}}"/>
+    </Grid>
+</Window>

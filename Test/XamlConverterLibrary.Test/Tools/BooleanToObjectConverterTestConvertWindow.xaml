@@ -1,0 +1,29 @@
+﻿<Window x:Class="XamlConverterLibrary.Test.BooleanToObjectConverterTestConvertWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:conv="clr-namespace:Converters;assembly=XamlConverterLibrary">
+    <Window.Resources>
+        <conv:BooleanToObjectConverter x:Key="convBooleanToObject"/>
+        <conv:NullToObjectConverter x:Key="convNullToObject"/>
+        <conv:ZeroToObjectConverter x:Key="convZeroToObject"/>
+        <CompositeCollection x:Key="CollapsedVisible">
+            <Visibility>Collapsed</Visibility>
+            <Visibility>Visible</Visibility>
+        </CompositeCollection>
+        <CompositeCollection x:Key="CollapsedVisibleVisible">
+            <Visibility>Collapsed</Visibility>
+            <Visibility>Visible</Visibility>
+            <Visibility>Visible</Visibility>
+        </CompositeCollection>
+    </Window.Resources>
+    <Grid>
+        <TextBlock Text="Test" x:Name="BoolPropertyTrue" Visibility="{Binding BoolPropertyTrue, Converter={StaticResource convBooleanToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="BoolPropertyFalse" Visibility="{Binding BoolPropertyFalse, Converter={StaticResource convBooleanToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="NullableBoolProperty3" Visibility="{Binding NullableBoolProperty, Converter={StaticResource convBooleanToObject}, ConverterParameter={StaticResource CollapsedVisibleVisible}}"/>
+        <TextBlock Text="Test" x:Name="NullableBoolProperty3True" Visibility="{Binding NullableBoolPropertyTrue, Converter={StaticResource convBooleanToObject}, ConverterParameter={StaticResource CollapsedVisibleVisible}}"/>
+        <TextBlock Text="Test" x:Name="NullableBoolProperty3False" Visibility="{Binding NullableBoolPropertyFalse, Converter={StaticResource convBooleanToObject}, ConverterParameter={StaticResource CollapsedVisibleVisible}}"/>
+        <TextBlock Text="Test" x:Name="NullableBoolProperty2" Visibility="{Binding NullableBoolProperty, Converter={StaticResource convBooleanToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="NullableBoolProperty2True" Visibility="{Binding NullableBoolPropertyTrue, Converter={StaticResource convBooleanToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="NullableBoolProperty2False" Visibility="{Binding NullableBoolPropertyFalse, Converter={StaticResource convBooleanToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+    </Grid>
+</Window>
