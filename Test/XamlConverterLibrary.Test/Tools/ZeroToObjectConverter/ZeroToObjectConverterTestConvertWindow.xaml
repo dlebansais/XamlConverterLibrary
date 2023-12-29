@@ -1,0 +1,49 @@
+﻿<Window x:Class="XamlConverterLibrary.Test.ZeroToObjectConverterTestConvertWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:conv="clr-namespace:Converters;assembly=XamlConverterLibrary">
+    <Window.Resources>
+        <conv:ZeroToObjectConverter x:Key="convZeroToObject"/>
+        <CompositeCollection x:Key="CollapsedVisible">
+            <Visibility>Collapsed</Visibility>
+            <Visibility>Visible</Visibility>
+        </CompositeCollection>
+        <CompositeCollection x:Key="CollapsedVisibleVisible">
+            <Visibility>Collapsed</Visibility>
+            <Visibility>Visible</Visibility>
+            <Visibility>Visible</Visibility>
+        </CompositeCollection>
+    </Window.Resources>
+    <Grid>
+        <TextBlock Text="Test" x:Name="IntPropertyOne" Visibility="{Binding IntPropertyOne, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="IntPropertyZero" Visibility="{Binding IntPropertyZero, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="NullableIntProperty3" Visibility="{Binding NullableIntProperty, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisibleVisible}}"/>
+        <TextBlock Text="Test" x:Name="NullableIntProperty3One" Visibility="{Binding NullableIntPropertyOne, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisibleVisible}}"/>
+        <TextBlock Text="Test" x:Name="NullableIntProperty3Zero" Visibility="{Binding NullableIntPropertyZero, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisibleVisible}}"/>
+        <TextBlock Text="Test" x:Name="NullableIntProperty2" Visibility="{Binding NullableIntProperty, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="NullableIntProperty2One" Visibility="{Binding NullableIntPropertyOne, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="NullableIntProperty2Zero" Visibility="{Binding NullableIntPropertyZero, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        
+        <TextBlock Text="Test" x:Name="BytePropertyZero" Visibility="{Binding BytePropertyZero, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="SBytePropertyZero" Visibility="{Binding SBytePropertyZero, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="ShortPropertyZero" Visibility="{Binding ShortPropertyZero, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="UShortPropertyZero" Visibility="{Binding UShortPropertyZero, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="UIntPropertyZero" Visibility="{Binding UIntPropertyZero, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="LongPropertyZero" Visibility="{Binding LongPropertyZero, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="ULongPropertyZero" Visibility="{Binding ULongPropertyZero, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+
+        <TextBlock Text="Test" x:Name="NullableBytePropertyZero" Visibility="{Binding NullableBytePropertyZero, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="NullableSBytePropertyZero" Visibility="{Binding NullableSBytePropertyZero, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="NullableShortPropertyZero" Visibility="{Binding NullableShortPropertyZero, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="NullableUShortPropertyZero" Visibility="{Binding NullableUShortPropertyZero, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="NullableUIntPropertyZero" Visibility="{Binding NullableUIntPropertyZero, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="NullableLongPropertyZero" Visibility="{Binding NullableLongPropertyZero, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="NullableULongPropertyZero" Visibility="{Binding NullableULongPropertyZero, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+
+        <TextBlock Text="Test" x:Name="ZeroLengthStringProperty" Visibility="{Binding ZeroLengthStringProperty, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="NonZeroLengthStringProperty" Visibility="{Binding NonZeroLengthStringProperty, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="EnumProperty" Visibility="{Binding EnumProperty, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="ZeroCountListProperty" Visibility="{Binding ZeroCountListProperty, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+        <TextBlock Text="Test" x:Name="NonZeroCountListProperty" Visibility="{Binding NonZeroCountListProperty, Converter={StaticResource convZeroToObject}, ConverterParameter={StaticResource CollapsedVisible}}"/>
+    </Grid>
+</Window>

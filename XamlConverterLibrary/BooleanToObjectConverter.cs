@@ -72,8 +72,8 @@ public class BooleanToObjectConverter : IValueConverter
     /// Converts an object to a <see cref="bool"/> instance in a binding.
     /// </summary>
     /// <param name="value">The value that is produced by the binding target.</param>
-    /// <param name="targetType">The type to convert to. Must be either <see cref="bool"/> or <see cref="Nullable{Boolean}"/>.</param>
-    /// <param name="parameter">The converter parameter to use.</param>
+    /// <param name="targetType">The type to convert to. It must be either <see cref="bool"/> or <see cref="Nullable{Boolean}"/>.</param>
+    /// <param name="parameter">The converter parameter to use. It must be a collection of objects containing at least two items.</param>
     /// <param name="culture">The culture to use in the converter (ignored).</param>
     /// <returns>
     /// If <paramref name="parameter"/> is a collection with at least three items, and <paramref name="value"/> is equal to the third item in the collection, returns <see langword="null"/>.
@@ -91,7 +91,7 @@ public class BooleanToObjectConverter : IValueConverter
     /// Converts an object to a <see cref="bool"/> instance in a binding.
     /// </summary>
     /// <param name="value">The value that is produced by the binding target.</param>
-    /// <param name="parameter">The converter parameter to use.</param>
+    /// <param name="parameter">The converter parameter to use. It must be a collection of objects containing at least two items.</param>
     /// <returns>
     /// If <paramref name="parameter"/> is a collection with at least three items, and <paramref name="value"/> is equal to the third item in the collection, returns <see langword="null"/>.
     /// Otherwise, if <paramref name="value"/> is equal to the second item in the collection, returns <see langword="true"/>.

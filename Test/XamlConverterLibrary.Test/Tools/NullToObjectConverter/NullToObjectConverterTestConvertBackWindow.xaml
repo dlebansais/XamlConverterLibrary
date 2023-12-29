@@ -1,0 +1,19 @@
+﻿<Window x:Class="XamlConverterLibrary.Test.NullToObjectConverterTestConvertBackWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:conv="clr-namespace:Converters;assembly=XamlConverterLibrary">
+    <Window.Resources>
+        <conv:NullToObjectConverter x:Key="convNullToObject"/>
+        <CompositeCollection x:Key="VisibleCollapsed">
+            <sys:String>Visible</sys:String>
+            <sys:String>Collapsed</sys:String>
+        </CompositeCollection>
+    </Window.Resources>
+    <Grid>
+        <TextBox x:Name="StringPropertyNull" Text="{Binding StringPropertyNull, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource convNullToObject}, ConverterParameter={StaticResource VisibleCollapsed}}"/>
+        <TextBox x:Name="StringPropertyNotNull" Text="{Binding StringPropertyNotNull, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource convNullToObject}, ConverterParameter={StaticResource VisibleCollapsed}}"/>
+        <TextBox x:Name="IntPropertyNull" Text="{Binding IntPropertyNull, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource convNullToObject}, ConverterParameter={StaticResource VisibleCollapsed}}"/>
+        <TextBox x:Name="IntPropertyNotNull" Text="{Binding IntPropertyNotNull, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource convNullToObject}, ConverterParameter={StaticResource VisibleCollapsed}}"/>
+    </Grid>
+</Window>

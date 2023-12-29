@@ -5,8 +5,6 @@
         xmlns:conv="clr-namespace:Converters;assembly=XamlConverterLibrary">
     <Window.Resources>
         <conv:BooleanToObjectConverter x:Key="convBooleanToObject"/>
-        <conv:NullToObjectConverter x:Key="convNullToObject"/>
-        <conv:ZeroToObjectConverter x:Key="convZeroToObject"/>
         <CompositeCollection x:Key="VisibleCollapsed">
             <sys:String>Visible</sys:String>
             <sys:String>Collapsed</sys:String>

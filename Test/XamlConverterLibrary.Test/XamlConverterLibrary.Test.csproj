@@ -42,7 +42,25 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Tools\BooleanToObjectConverterTestConvertBackWindow.xaml.cs">
+      <Compile Update="Tools\BooleanToObjectConverter\BooleanToObjectConverterTestConvertBackWindow.xaml.cs">
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Tools\ZeroToObjectConverter\ZeroToObjectConverterTestConvertBackWindow.xaml.cs">
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Tools\ZeroToObjectConverter\ZeroToObjectConverterTestConvertWindow.xaml.cs">
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Tools\NullToObjectConverter\BooleanToObjectConverterTestConvertBackWindow.xaml.cs">
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Tools\NullToObjectConverter\NullToObjectConverterTestConvertBackWindow.xaml.cs">
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Tools\NullToObjectConverter\BooleanToObjectConverterTestConvertWindow.xaml.cs">
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Tools\NullToObjectConverter\NullToObjectConverterTestConvertWindow.xaml.cs">
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
