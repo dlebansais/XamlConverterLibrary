@@ -28,6 +28,7 @@ public class TestConverterTools
         NonStaticFieldTestClass TestIntance0 = new(string.Empty, string.Empty);
         Assert.That(TestIntance0.GetType().CanCreateInstanceOf(), Is.False);
 
+        StaticMutableFieldTestClass.SetMutableField();
         StaticMutableFieldTestClass TestIntance1 = new(string.Empty, string.Empty);
         Assert.That(TestIntance1.GetType().CanCreateInstanceOf(), Is.False);
     }
