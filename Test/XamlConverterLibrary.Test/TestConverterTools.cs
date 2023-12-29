@@ -24,8 +24,12 @@ public class TestConverterTools
         Assert.That(typeof(int?).CanCreateInstanceOf(), Is.True);
         Assert.That(typeof(int).CanCreateInstanceOf(), Is.False);
         Assert.That(typeof(List<int>).CanCreateInstanceOf(), Is.True);
-        Assert.That(typeof(NonStaticFieldTestClass).CanCreateInstanceOf(), Is.False);
-        Assert.That(typeof(StaticMutableFieldTestClass).CanCreateInstanceOf(), Is.False);
+
+        NonStaticFieldTestClass TestIntance0 = new(string.Empty, string.Empty);
+        Assert.That(TestIntance0.GetType().CanCreateInstanceOf(), Is.False);
+
+        StaticMutableFieldTestClass TestIntance1 = new(string.Empty, string.Empty);
+        Assert.That(TestIntance1.GetType().CanCreateInstanceOf(), Is.False);
     }
 
     [Test]
