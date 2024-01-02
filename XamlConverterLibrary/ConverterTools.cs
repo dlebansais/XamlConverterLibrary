@@ -10,7 +10,7 @@ using Contracts;
 /// <summary>
 /// Provides helper methods for converters in this namespace.
 /// </summary>
-public static class ConverterTools
+internal static class ConverterTools
 {
     /// <summary>
     /// Checks whether the provided type is nullable.
@@ -60,7 +60,7 @@ public static class ConverterTools
 
         if (IsNullableValueType(TargetType, out Type ValueType))
         {
-            ConstructorInfo[] ValidConstructors = Contract.NullSupressed(Constructors);
+            ConstructorInfo[] ValidConstructors = Contract.AssertNotNull(Constructors);
             Contract.Require(ValidConstructors.Length == 1);
 
             ConstructorInfo ValueConstructorInfo = ValidConstructors[0];
@@ -70,7 +70,8 @@ public static class ConverterTools
             ParameterInfo ValueParameter = Parameters[0];
             Contract.Require(ValueParameter.ParameterType == ValueType);
 
-            object DefaultValueParameter = Contract.NullSupressed(Activator.CreateInstance(ValueType));
+            var CreateInstanceOfValueType = () => Activator.CreateInstance(ValueType);
+            object DefaultValueParameter = Contract.AssertNotNull(Contract.AssertNoThrow(CreateInstanceOfValueType));
             NullableInstance = ValueConstructorInfo.Invoke(new object[] { DefaultValueParameter });
         }
 
@@ -125,7 +126,7 @@ public static class ConverterTools
     /// <remarks>Reading this property is valid if and only if <see cref="CanCreateInstanceOf(Type)"/> returned true.</remarks>
     public static object LastInstance
     {
-        get { return Contract.NullSupressed(LastInstanceInternal.Value); }
+        get { return Contract.AssertNotNull(LastInstanceInternal.Value); }
         private set { LastInstanceInternal.Value = value; }
     }
 

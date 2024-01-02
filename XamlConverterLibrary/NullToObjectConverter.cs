@@ -68,7 +68,7 @@ public class NullToObjectConverter : IValueConverter
         Contract.Require(targetType.CanCreateInstanceOf());
 
         // This instance is obtained as a side effect of the call to CanCreateInstanceOf(targetType).
-        object Instance = Contract.NullSupressed(ConverterTools.LastInstance);
+        object Instance = Contract.AssertNotNull(ConverterTools.LastInstance);
 
         return ConvertBack(value, parameter, Instance);
     }
