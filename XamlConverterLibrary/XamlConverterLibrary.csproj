@@ -14,8 +14,8 @@
         <Product />
         <Description>Common converters for WPF applications</Description>
         <Copyright>Copyright © 2023 David Le Bansais</Copyright>
-        <AssemblyVersion>1.0.7.4</AssemblyVersion>
-        <FileVersion>1.0.7.3</FileVersion>
+        <AssemblyVersion>1.0.7.5</AssemblyVersion>
+        <FileVersion>1.0.7.5</FileVersion>
         <RepositoryUrl>https://github.com/dlebansais/XamlConverterLibrary</RepositoryUrl>
         <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
 

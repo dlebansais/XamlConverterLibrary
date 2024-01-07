@@ -1,0 +1,12 @@
+﻿<Window x:Class="XamlConverterLibrary.Test.PassthroughConverterTestConvertBackWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:conv="clr-namespace:Converters;assembly=XamlConverterLibrary">
+    <Window.Resources>
+        <conv:PassthroughConverter x:Key="convPassthrough"/>
+    </Window.Resources>
+    <Grid>
+        <TextBox x:Name="StringProperty" Text="{Binding StringProperty, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource convPassthrough}}"/>
+    </Grid>
+</Window>
