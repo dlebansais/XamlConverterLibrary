@@ -8,14 +8,14 @@
         <Platforms>x64</Platforms>
 
         <RootNamespace>Converters</RootNamespace>
-        <Version>1.0.7</Version>
+        <Version>1.0.8</Version>
         <Authors>David Le Bansais</Authors>
         <Company />
         <Product />
         <Description>Common converters for WPF applications</Description>
         <Copyright>Copyright © 2023 David Le Bansais</Copyright>
-        <AssemblyVersion>1.0.7.5</AssemblyVersion>
-        <FileVersion>1.0.7.5</FileVersion>
+        <AssemblyVersion>1.0.8.5</AssemblyVersion>
+        <FileVersion>1.0.8.5</FileVersion>
         <RepositoryUrl>https://github.com/dlebansais/XamlConverterLibrary</RepositoryUrl>
         <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
 
@@ -62,7 +62,7 @@
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
 
-        <PackageReference Include="Method.Contracts" Version="1.2.0" />
+        <PackageReference Include="Method.Contracts" Version="1.2.1" />
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(SolutionDir)'!='*Undefined*'">
