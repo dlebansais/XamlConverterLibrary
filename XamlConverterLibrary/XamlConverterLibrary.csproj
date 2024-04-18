@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netcoreapp3.1;net481;net6.0-windows7.0;net7.0-windows7.0;net8.0-windows7.0</TargetFrameworks>
+        <TargetFrameworks>netcoreapp3.1;net481;net8.0-windows7.0</TargetFrameworks>
         <UseWPF>true</UseWPF>
         <LangVersion>12</LangVersion>
         <Nullable>enable</Nullable>
@@ -9,13 +9,13 @@
 
         <RootNamespace>Converters</RootNamespace>
         <Version>1.0.8</Version>
+        <AssemblyVersion>1.0.8.5</AssemblyVersion>
+        <FileVersion>1.0.8.5</FileVersion>
         <Authors>David Le Bansais</Authors>
         <Company />
         <Product />
         <Description>Common converters for WPF applications</Description>
-        <Copyright>Copyright © 2023 David Le Bansais</Copyright>
-        <AssemblyVersion>1.0.8.5</AssemblyVersion>
-        <FileVersion>1.0.8.5</FileVersion>
+        <Copyright>Copyright © 2024 David Le Bansais</Copyright>
         <RepositoryUrl>https://github.com/dlebansais/XamlConverterLibrary</RepositoryUrl>
         <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
 
@@ -54,6 +54,10 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="IDisposableAnalyzers" Version="4.0.7">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="PolySharp" Version="1.14.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -62,7 +66,8 @@
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
 
-        <PackageReference Include="Method.Contracts" Version="1.2.1" />
+        <PackageReference Include="Method.Contracts-Debug" Version="1.2.1" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+        <PackageReference Include="Method.Contracts" Version="1.2.1" Condition="'$(Configuration)|$(Platform)'!='Debug|x64'" />
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(SolutionDir)'!='*Undefined*'">
