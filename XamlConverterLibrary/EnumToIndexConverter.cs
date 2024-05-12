@@ -9,7 +9,7 @@ using Contracts;
 /// Converter to and from enum to int.
 /// </summary>
 [ValueConversion(typeof(Enum), typeof(int))]
-public class EnumToIndexConverter : IValueConverter
+public partial class EnumToIndexConverter : IValueConverter
 {
     /// <summary>
     /// Converter from an enum value to its index in the enumeration.
@@ -19,10 +19,10 @@ public class EnumToIndexConverter : IValueConverter
     /// <param name="parameter">The converter parameter to use (ignored).</param>
     /// <param name="culture">The culture to use in the converter (ignored).</param>
     /// <returns>The index of <paramref name="value"/> in the enumeration.</returns>
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    [Access("public")]
+    [Require("value is Enum")]
+    private static object ConvertVerified(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        Contract.Require(value is Enum);
-
         return Convert((Enum)value);
     }
 
@@ -31,21 +31,19 @@ public class EnumToIndexConverter : IValueConverter
     /// </summary>
     /// <param name="value">The value produced by the binding source. The type of <paramref name="value"/> must be an enum.</param>
     /// <returns>The index of <paramref name="value"/> in the enumeration.</returns>
-    public static object Convert(Enum value)
+    [RequireNotNull(nameof(value))]
+    [Ensure("(int)Result >= 0 && (int)Result < Value.GetType().GetEnumValues().Length")]
+    private static object ConvertVerified(Enum value)
     {
-        Contract.RequireNotNull(value, out Enum Value);
-
-        Array Values = Value.GetType().GetEnumValues();
+        Array Values = value.GetType().GetEnumValues();
         int Index = -1;
 
         for (int i = 0; i < Values.Length; i++)
-            if (Value.Equals(Values.GetValue(i)))
+            if (value.Equals(Values.GetValue(i)))
             {
                 Index = i;
                 break;
             }
-
-        Contract.Require(Index >= 0 && Index < Values.Length);
 
         return Index;
     }
@@ -69,22 +67,18 @@ public class EnumToIndexConverter : IValueConverter
     /// <param name="value">The value that is produced by the binding target.</param>
     /// <param name="targetType">The type to convert to. It must be an enum.</param>
     /// <returns>The enum value at the index provided by <paramref name="value"/>.</returns>
-    public static object ConvertBack(object value, Type targetType)
+    [RequireNotNull(nameof(value))]
+    [Require("typeof(int).IsAssignableFrom(Value.GetType())")]
+    [RequireNotNull(nameof(targetType))]
+    [Require("typeof(Enum).IsAssignableFrom(TargetType)")]
+    [Require("(int)Value >= 0 && (int)Value < TargetType.GetEnumValues().Length")]
+    private static object ConvertBackVerified(object value, Type targetType)
     {
-        Contract.RequireNotNull(value, out object Value);
-        Contract.Require(typeof(int).IsAssignableFrom(Value.GetType()));
-        Contract.RequireNotNull(targetType, out Type TargetType);
-        Contract.Require(typeof(Enum).IsAssignableFrom(TargetType));
-
         int Index = (int)value;
-        Array EnumValues = TargetType.GetEnumValues();
-
-        Contract.Require(Index >= 0 && Index < EnumValues.Length);
-
+        Array EnumValues = targetType.GetEnumValues();
         object? EnumValue = EnumValues.GetValue(Index);
+        object Result = Contract.AssertNotNull(EnumValue);
 
-        Contract.Require(EnumValue is not null);
-
-        return EnumValue!;
+        return Result;
     }
 }

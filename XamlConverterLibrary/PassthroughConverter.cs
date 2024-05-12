@@ -9,7 +9,7 @@ using Contracts;
 /// Converter that leaves a value unchanged as long as it is not <see langword="null"/>.
 /// </summary>
 [ValueConversion(typeof(object), typeof(object))]
-public class PassthroughConverter : IValueConverter
+public partial class PassthroughConverter : IValueConverter
 {
     /// <summary>
     /// Converts a value leaving it unchanged as long as it is not <see langword="null"/>.
@@ -21,19 +21,18 @@ public class PassthroughConverter : IValueConverter
     /// <returns><paramref name="value"/>.</returns>
     public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
     {
-        return Convert(value);
+        return Convert(value!);
     }
 
     /// <summary>
-    /// Converts a value levaing it unchanged as long as it is not <see langword="null"/>.
+    /// Converts a value leaving it unchanged as long as it is not <see langword="null"/>.
     /// </summary>
     /// <param name="value">The value produced by the binding source. Must not be <see langword="null"/>.</param>
     /// <returns><paramref name="value"/>.</returns>
-    public static object Convert(object? value)
+    [RequireNotNull(nameof(value))]
+    private static object ConvertVerified(object value)
     {
-        Contract.RequireNotNull(value, out object Value);
-
-        return Value;
+        return value;
     }
 
     /// <summary>
@@ -54,10 +53,9 @@ public class PassthroughConverter : IValueConverter
     /// </summary>
     /// <param name="value">The value that is produced by the binding target. Must not be <see langword="null"/>.</param>
     /// <returns><paramref name="value"/>.</returns>
-    public static object ConvertBack(object value)
+    [RequireNotNull(nameof(value))]
+    private static object ConvertBackVerified(object value)
     {
-        Contract.RequireNotNull(value, out object Value);
-
-        return Value;
+        return value;
     }
 }

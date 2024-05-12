@@ -10,25 +10,24 @@ using Contracts;
 /// <summary>
 /// Provides helper methods for converters in this namespace.
 /// </summary>
-internal static class ConverterTools
+internal static partial class ConverterTools
 {
     /// <summary>
     /// Checks whether the provided type is nullable.
     /// </summary>
     /// <param name="targetType">The type.</param>
     /// <returns><see langword="true"/> if <paramref name="targetType"/> is nullable; Otherwise, <see langword="false"/>.</returns>
-    public static bool IsNullable(this Type targetType)
+    [RequireNotNull(nameof(targetType))]
+    private static bool IsNullableVerified(this Type targetType)
     {
-        Contract.RequireNotNull(targetType, out Type TargetType);
-
-        if (TargetType.IsGenericType)
+        if (targetType.IsGenericType)
         {
-            Type GenericTypeDefinition = TargetType.GetGenericTypeDefinition();
+            Type GenericTypeDefinition = targetType.GetGenericTypeDefinition();
             if (GenericTypeDefinition == typeof(Nullable<>))
                 return true;
         }
 
-        if (!TargetType.IsValueType)
+        if (!targetType.IsValueType)
             return true;
 
         return false;
@@ -40,14 +39,13 @@ internal static class ConverterTools
     /// <param name="targetType">The type.</param>
     /// <returns><see langword="true"/> if creating an instance of <paramref name="targetType"/> is possible; Otherwise, <see langword="false"/>.</returns>
     /// <remarks>This method has a side effect and saves the new instance of <paramref name="targetType"/> in thread-local storage if successful.</remarks>
-    public static bool CanCreateInstanceOf(this Type targetType)
+    [RequireNotNull(nameof(targetType))]
+    private static bool CanCreateInstanceOfVerified(this Type targetType)
     {
-        Contract.RequireNotNull(targetType, out Type TargetType);
-
-        var Fields = TargetType.GetFields();
+        var Fields = targetType.GetFields();
         var StaticFieldInfo = Fields?.FirstOrDefault(IsStaticInstance);
 
-        var Constructors = TargetType.GetConstructors();
+        var Constructors = targetType.GetConstructors();
         var ParameterlessConstructorInfo = Constructors?.FirstOrDefault((ConstructorInfo constructor) => constructor.GetParameters().Length == 0);
 
         object? NullableInstance = null;
@@ -58,7 +56,7 @@ internal static class ConverterTools
         if (ParameterlessConstructorInfo is not null)
             NullableInstance = ParameterlessConstructorInfo.Invoke(Array.Empty<object>());
 
-        if (IsNullableValueType(TargetType, out Type ValueType))
+        if (IsNullableValueType(targetType, out Type ValueType))
         {
             ConstructorInfo[] ValidConstructors = Contract.AssertNotNull(Constructors);
             Contract.Require(ValidConstructors.Length == 1);
@@ -72,7 +70,7 @@ internal static class ConverterTools
 
             var CreateInstanceOfValueType = () => Activator.CreateInstance(ValueType);
             object DefaultValueParameter = Contract.AssertNotNull(Contract.AssertNoThrow(CreateInstanceOfValueType));
-            NullableInstance = ValueConstructorInfo.Invoke(new object[] { DefaultValueParameter });
+            NullableInstance = ValueConstructorInfo.Invoke([DefaultValueParameter]);
         }
 
         if (NullableInstance is null)
