@@ -90,10 +90,10 @@ internal static partial class ConverterTools
             if (GenericTypeDefinition == typeof(Nullable<>))
             {
                 Type[] GenericArguments = targetType.GetGenericArguments();
-                Debug.Assert(GenericArguments.Length == 1);
+                Contract.Assert(GenericArguments.Length == 1);
 
                 Type FirstGenericArgument = GenericArguments[0];
-                Debug.Assert(FirstGenericArgument.IsValueType);
+                Contract.Assert(FirstGenericArgument.IsValueType);
 
                 valueType = FirstGenericArgument;
                 return true;

@@ -8,9 +8,9 @@
         <Platforms>x64</Platforms>
 
         <RootNamespace>Converters</RootNamespace>
-        <Version>1.0.8</Version>
-        <AssemblyVersion>1.0.8.8</AssemblyVersion>
-        <FileVersion>1.0.8.8</FileVersion>
+        <Version>1.0.9</Version>
+        <AssemblyVersion>1.0.9.9</AssemblyVersion>
+        <FileVersion>1.0.9.9</FileVersion>
         <Authors>David Le Bansais</Authors>
         <Company />
         <Product />
