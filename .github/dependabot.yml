@@ -10,7 +10,7 @@ registries:
     url: https://npm.pkg.github.com
     token: ${{secrets.PRIVATE_GITHUB_SOURCE}}
 updates:
-  - package-ecosystem: npm
+  - package-ecosystem: nuget
     directory: "/"
     registries:
       - github-packages
