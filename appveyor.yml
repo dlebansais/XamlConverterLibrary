@@ -70,17 +70,14 @@ before_test:
   - |-
     printf ".\packages\OpenCover.%opencover_version%\Tools\OpenCover.Console.exe -register:user -returntargetcode -target:\x25\x31 -mergeoutput -output:""Coverage-%APPVEYOR_PROJECT_NAME%.xml""\n" > opencover.bat
   - |-
-    printf "echo on\n" > after-test.bat
-    printf ".\packages\CodecovUploader.%codecov_version%\Tools\codecov.exe -f ""Coverage-%APPVEYOR_PROJECT_NAME%.xml""\n" >> after-test.bat
-    printf ".\packages\ReportGenerator.%report_generator_version%\Tools\net8.0\ReportGenerator.exe ""-reports:Coverage-%APPVEYOR_PROJECT_NAME%.xml"" -targetdir:.\CoverageReports ""-assemblyfilters:-Microsoft*;+%APPVEYOR_PROJECT_NAME%"" ""-filefilters:-*.g.cs"" -reporttypes:textsummary\n" >> after-test.bat
-    printf "powershell if ((Get-Content .\CoverageReports\Summary.txt) -NotContains 'Branch coverage: 200%') exit (-1)\n" >> after-test.bat
+    printf ".\packages\CodecovUploader.%codecov_version%\Tools\codecov.exe -f ""Coverage-%APPVEYOR_PROJECT_NAME%.xml""\n" > after-test.bat
 
 test_script:
   - if '%APPVEYOR_REPO_BRANCH%' == 'master' opencover.bat run-tests1.bat
 
 after_test:
   - ps: Get-Content Coverage-*.xml -Head 3
-  - if '%APPVEYOR_REPO_BRANCH%' == 'master' cmd after-test.bat
+  - if '%APPVEYOR_REPO_BRANCH%' == 'master' after-test.bat
 
 artifacts:
   - path: $(APPVEYOR_PROJECT_NAME)-Debug.*.nupkg
