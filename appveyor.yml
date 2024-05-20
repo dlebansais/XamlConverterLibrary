@@ -17,7 +17,7 @@ init:
   - git config --global core.autocrlf input
 
 environment:
-  NuGetPackageSourceCredentials_github:
+  NuGetPackageSourceCredentials_github:     # value: Username=dlebansais;Password={github package token}
     secure: Fd8cbeFRzxym3D4FpbJo2m943iBsBRgrAGOEFhMHDO90WMUkfdJECxPcHpWmkxregb17bhgiIhvFJB9ac4dx3cr3ZpsxpqTzIc61BaUiv90=
   opencover_version: 4.7.1221
   codecov_version: 0.2.4
@@ -27,7 +27,6 @@ matrix:
   fast_finish: true     # set this flag to immediately finish build once one of the jobs fails.
 
 before_build:
-  - echo == %NuGetPackageSourceCredentials_github% ==
   - nuget restore %APPVEYOR_PROJECT_NAME%.sln
   - nuget install GitCommitId -DependencyVersion Highest -OutputDirectory packages
 
@@ -48,8 +47,7 @@ after_build:
   - if exist nuget\%APPVEYOR_PROJECT_NAME%.nuspec nuget pack nuget\%APPVEYOR_PROJECT_NAME%.nuspec
   - '%PACKAGER_PATH% %CUSTOM_PACKAGER_OPTIONS% --debug'                         # Execute the packager: the output is nuget-debug\%APPVEYOR_PROJECT_NAME%-Debug.nuspec
   - if exist nuget-debug\%APPVEYOR_PROJECT_NAME%-Debug.nuspec nuget pack nuget-debug\%APPVEYOR_PROJECT_NAME%-Debug.nuspec
-  - ps: |-
-        $xml = [xml](Get-Content .\$env:APPVEYOR_PROJECT_NAME\$env:APPVEYOR_PROJECT_NAME.csproj)
+  - ps: $xml = [xml](Get-Content .\$env:APPVEYOR_PROJECT_NAME\$env:APPVEYOR_PROJECT_NAME.csproj)
   - ps: $version=$xml.Project.PropertyGroup.Version
   - ps: set version_tag v$version
   - ps: $version_tag=$version_tag.Trim()
