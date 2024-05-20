@@ -30,7 +30,7 @@ matrix:
   fast_finish: true     # set this flag to immediately finish build once one of the jobs fails.
 
 before_build:
-  - setx NuGetPackageSourceCredentials_github Username=dlebansais;Password=$env:package_token /M
+  - setx NuGetPackageSourceCredentials_github Username=dlebansais;Password=%package_token% /M
   - set
   - nuget restore %APPVEYOR_PROJECT_NAME%.sln
   - nuget install GitCommitId -DependencyVersion Highest -OutputDirectory packages
