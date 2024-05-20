@@ -70,7 +70,8 @@ before_test:
   - |-
     printf ".\packages\OpenCover.%opencover_version%\Tools\OpenCover.Console.exe -register:user -returntargetcode -target:\x25\x31 -mergeoutput -output:""Coverage-%APPVEYOR_PROJECT_NAME%.xml""\n" > opencover.bat
   - |-
-    printf ".\packages\CodecovUploader.%codecov_version%\Tools\codecov.exe -f ""Coverage-%APPVEYOR_PROJECT_NAME%.xml""\n" > after-test.bat
+    printf ".\packages\CodecovUploader.%codecov_version%\Tools\Codecov.exe -f ""Coverage-%APPVEYOR_PROJECT_NAME%.xml""\n" > after-test.bat
+    printf ".\packages\ReportGenerator.%report_generator_version%\Tools\Net8.0\ReportGenerator.exe ""-reports:Coverage-%APPVEYOR_PROJECT_NAME%.xml"" -targetdir:.\CoverageReports ""-assemblyfilters:-Microsoft*;+%APPVEYOR_PROJECT_NAME%"" ""-filefilters:-*.g.cs"" -reporttypes:textsummary\n" >> after-test.bat
 
 test_script:
   - if '%APPVEYOR_REPO_BRANCH%' == 'master' opencover.bat run-tests1.bat
