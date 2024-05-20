@@ -34,6 +34,7 @@ before_build:
 
 configuration:
   - Release
+  - Debug
 
 build:
   project: $(APPVEYOR_PROJECT_NAME).sln
