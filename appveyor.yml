@@ -24,14 +24,14 @@ environment:
   codecov_version: 0.2.4
   report_generator_version: 5.2.0
   csharp-format_version: 0.0.9
-  Test_github: Username=dlebansais;Password=$env:csharp-format_version
+  Test_github: Username=dlebansais;Password=csharp-format_version
 
 matrix:
   fast_finish: true     # set this flag to immediately finish build once one of the jobs fails.
 
 before_build:
-  - ps: Write-Output $env:Test_github
-  - ps: (Get-Content nuget.config).replace('Insert token here', $env:package_token) | Set-Content nuget.config
+  - setx NuGetPackageSourceCredentials_github Username=dlebansais;Password=$env:package_token /M
+  - set
   - nuget restore %APPVEYOR_PROJECT_NAME%.sln
   - nuget install GitCommitId -DependencyVersion Highest -OutputDirectory packages
 
