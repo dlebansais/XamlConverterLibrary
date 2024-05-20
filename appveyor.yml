@@ -79,7 +79,7 @@ test_script:
 
 after_test:
   - ps: Get-Content Coverage-*.xml -Head 3
-  - if '%APPVEYOR_REPO_BRANCH%' == 'master' after-test.bat
+  - if '%APPVEYOR_REPO_BRANCH%' == 'master' type after-test.bat
 
 artifacts:
   - path: $(APPVEYOR_PROJECT_NAME)-Debug.*.nupkg
