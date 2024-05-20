@@ -21,6 +21,7 @@ environment:
     secure: oeB0vPa3ehegduJ/WnxLssnK6wiIc8MVx0lVYeiXKT6pIz9ZDQ4ioQ55g6GYz9dW
   opencover_version: 4.7.1221
   codecov_version: 0.2.4
+  report_generator_version: 5.2.0
   csharp-format_version: 0.0.9
 
 matrix:
@@ -74,6 +75,12 @@ test_script:
 after_test:
   - ps: Get-Content Coverage-*.xml -Head 3
   - if '%APPVEYOR_REPO_BRANCH%' == 'master' .\packages\CodecovUploader.%codecov_version%\Tools\codecov.exe -f "Coverage-%APPVEYOR_PROJECT_NAME%.xml"
+  - nuget install ReportGenerator -Version %report_generator_version% -OutputDirectory packages
+  - if '%APPVEYOR_REPO_BRANCH%' == 'master' .\packages\ReportGenerator.%report_generator_version%\Tools\net8.0\ReportGenerator.exe "-reports:Coverage-%APPVEYOR_PROJECT_NAME%.xml" -targetdir:.\CoverageReports "-assemblyfilters:-Microsoft*;+%APPVEYOR_PROJECT_NAME%" "-filefilters:-*.g.cs" "-reporttypes:textsummary"
+  - ps: |-
+        $summary = Get-Content .\CoverageReports\Summary.txt
+        $pattern = 'Branch coverage: 200%'
+        $summary -Contains $pattern
 
 artifacts:
   - path: $(APPVEYOR_PROJECT_NAME)-Debug.*.nupkg

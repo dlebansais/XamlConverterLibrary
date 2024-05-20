@@ -43,10 +43,10 @@ internal static partial class ConverterTools
     private static bool CanCreateInstanceOfVerified(this Type targetType)
     {
         var Fields = targetType.GetFields();
-        var StaticFieldInfo = Fields?.FirstOrDefault(IsStaticInstance);
+        var StaticFieldInfo = Fields.FirstOrDefault(IsStaticInstance);
 
         var Constructors = targetType.GetConstructors();
-        var ParameterlessConstructorInfo = Constructors?.FirstOrDefault((ConstructorInfo constructor) => constructor.GetParameters().Length == 0);
+        var ParameterlessConstructorInfo = Constructors.FirstOrDefault((ConstructorInfo constructor) => constructor.GetParameters().Length == 0);
 
         object? NullableInstance = null;
 

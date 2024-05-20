@@ -36,16 +36,7 @@ public partial class EnumToIndexConverter : IValueConverter
     private static object ConvertVerified(Enum value)
     {
         Array Values = value.GetType().GetEnumValues();
-        int Index = -1;
-
-        for (int i = 0; i < Values.Length; i++)
-            if (value.Equals(Values.GetValue(i)))
-            {
-                Index = i;
-                break;
-            }
-
-        return Index;
+        return Array.IndexOf(Values, value, 0);
     }
 
     /// <summary>
