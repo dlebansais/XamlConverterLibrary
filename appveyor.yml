@@ -19,18 +19,15 @@ init:
 environment:
   package_token:
     secure: oeB0vPa3ehegduJ/WnxLssnK6wiIc8MVx0lVYeiXKT6pIz9ZDQ4ioQ55g6GYz9dW
-  NuGetPackageSourceCredentials_github: Username=dlebansais;Password=$env:package_token
   opencover_version: 4.7.1221
   codecov_version: 0.2.4
   report_generator_version: 5.2.0
-  csharp-format_version: 0.0.9
-  Test_github: Username=dlebansais;Password=csharp-format_version
 
 matrix:
   fast_finish: true     # set this flag to immediately finish build once one of the jobs fails.
 
 before_build:
-  - setx NuGetPackageSourceCredentials_github Username=dlebansais;Password=%package_token% /M
+  - setx NuGetPackageSourceCredentials_github Username=dlebansais;Password=%package_token%
   - set
   - nuget restore %APPVEYOR_PROJECT_NAME%.sln
   - nuget install GitCommitId -DependencyVersion Highest -OutputDirectory packages
