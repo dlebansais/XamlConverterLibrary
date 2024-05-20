@@ -5,13 +5,14 @@
 
 version: 2
 registries:
-  gradle-artifactory:
-    type: nuget
-    url: https://nuget.pkg.github.com/dlebansais/index.json
+  github:
+    type: npm-registry
+    url: https://npm.pkg.github.com
     username: dlebansais
-    password: ${{secrets.PRIVATE_GITHUB_SOURCE}}
+    token: ${{secrets.PRIVATE_GITHUB_SOURCE}}
 updates:
   - package-ecosystem: "nuget"
     directory: "/" # Location of package manifests
+    registries: "*"
     schedule:
       interval: "weekly"
