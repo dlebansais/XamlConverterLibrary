@@ -60,27 +60,26 @@ after_build:
 before_test:
   - nuget install OpenCover -Version %opencover_version% -OutputDirectory packages
   - nuget install CodecovUploader -Version %codecov_version% -OutputDirectory packages
+  - nuget install ReportGenerator -Version %report_generator_version% -OutputDirectory packages
   - |-
-    printf "dotnet test ./Test/%APPVEYOR_PROJECT_NAME%.Test/bin/x64/%CONFIGURATION%/net8.0-windows7.0/%APPVEYOR_PROJECT_NAME%.Test.dll -l console;verbosity=detailed\n" > runtests.bat
-    printf "dotnet test ./Test/%APPVEYOR_PROJECT_NAME%.Test/bin/x64/%CONFIGURATION%/net481/%APPVEYOR_PROJECT_NAME%.Test.dll -l console;verbosity=detailed\n" >> runtests.bat
+    printf "dotnet test ./Test/%APPVEYOR_PROJECT_NAME%.Test/bin/x64/%CONFIGURATION%/net8.0-windows7.0/%APPVEYOR_PROJECT_NAME%.Test.dll -l console;verbosity=detailed\n" > run-tests.bat
+    printf "dotnet test ./Test/%APPVEYOR_PROJECT_NAME%.Test/bin/x64/%CONFIGURATION%/net481/%APPVEYOR_PROJECT_NAME%.Test.dll -l console;verbosity=detailed\n" >> run-tests.bat
   - |-
-    printf "@echo ************************************************************** Starting Tests..\n" > runtests1.bat
-    printf "call runtests.bat\n" >> runtests1.bat
+    printf "@echo ************************************************************** Starting Tests..\n" > run-tests1.bat
+    printf "call run-tests.bat\n" >> run-tests1.bat
   - |-
-    printf ".\packages\OpenCover.%opencover_version%\Tools\OpenCover.Console.exe -register:user -returntargetcode -target:\x25\x31 -mergeoutput -output:""Coverage-%APPVEYOR_PROJECT_NAME%"".xml\n" > opencover.bat
+    printf ".\packages\OpenCover.%opencover_version%\Tools\OpenCover.Console.exe -register:user -returntargetcode -target:\x25\x31 -mergeoutput -output:""Coverage-%APPVEYOR_PROJECT_NAME%.xml""\n" > opencover.bat
+  - |-
+    printf ".\packages\CodecovUploader.%codecov_version%\Tools\codecov.exe -f ""Coverage-%APPVEYOR_PROJECT_NAME%.xml""\n" > after-test.bat
+    printf ".\packages\ReportGenerator.%report_generator_version%\Tools\net8.0\ReportGenerator.exe ""-reports:Coverage-%APPVEYOR_PROJECT_NAME%.xml"" -targetdir:.\CoverageReports ""-assemblyfilters:-Microsoft*;+%APPVEYOR_PROJECT_NAME%"" ""-filefilters:-*.g.cs"" -reporttypes:textsummary\n" >> after-test.bat
+    printf "powershell if ((Get-Content .\CoverageReports\Summary.txt) -NotContains 'Branch coverage: 200%') exit (-1)\n" >> after-test.bat
 
 test_script:
-  - opencover.bat runtests1.bat
+  - if '%APPVEYOR_REPO_BRANCH%' == 'master' opencover.bat run-tests1.bat
 
 after_test:
   - ps: Get-Content Coverage-*.xml -Head 3
-  - if '%APPVEYOR_REPO_BRANCH%' == 'master' .\packages\CodecovUploader.%codecov_version%\Tools\codecov.exe -f "Coverage-%APPVEYOR_PROJECT_NAME%.xml"
-  - nuget install ReportGenerator -Version %report_generator_version% -OutputDirectory packages
-  - if '%APPVEYOR_REPO_BRANCH%' == 'master' .\packages\ReportGenerator.%report_generator_version%\Tools\net8.0\ReportGenerator.exe "-reports:Coverage-%APPVEYOR_PROJECT_NAME%.xml" -targetdir:.\CoverageReports "-assemblyfilters:-Microsoft*;+%APPVEYOR_PROJECT_NAME%" "-filefilters:-*.g.cs" "-reporttypes:textsummary"
-  - ps: |-
-        $summary = Get-Content .\CoverageReports\Summary.txt
-        $pattern = 'Branch coverage: 200%'
-        $summary -Contains $pattern
+  - if '%APPVEYOR_REPO_BRANCH%' == 'master' after-test.bat
 
 artifacts:
   - path: $(APPVEYOR_PROJECT_NAME)-Debug.*.nupkg
