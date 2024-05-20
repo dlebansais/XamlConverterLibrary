@@ -5,14 +5,15 @@
 
 version: 2
 registries:
-  github:
+  github-packages:
     type: npm-registry
     url: https://npm.pkg.github.com
     token: ${{secrets.PRIVATE_GITHUB_SOURCE}}
 updates:
-  - package-ecosystem: "nuget"
-    directory: "/" # Location of package manifests
-    registries: "*"
+  - package-ecosystem: npm
+    directory: "/"
+    registries:
+      - github-packages
     schedule:
       interval: "weekly"
     ignore:
