@@ -4,6 +4,12 @@
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
+registries:
+  gradle-artifactory:
+    type: nuget
+    url: https://nuget.pkg.github.com/dlebansais/index.json
+    username: dlebansais
+    password: ${{secrets.PRIVATE_GITHUB_SOURCE}}
 updates:
   - package-ecosystem: "nuget"
     directory: "/" # Location of package manifests
