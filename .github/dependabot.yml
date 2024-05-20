@@ -9,7 +9,6 @@ registries:
     type: npm-registry
     url: https://npm.pkg.github.com
     token: ${{secrets.OTHER_TOKEN}}
-    replaces-base: true
 updates:
   - package-ecosystem: nuget
     directory: "/"
