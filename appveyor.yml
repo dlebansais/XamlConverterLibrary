@@ -20,7 +20,7 @@ environment:
   NuGetPackageSourceCredentials_github:     # value: Username=dlebansais;Password={github package token}
     secure: Fd8cbeFRzxym3D4FpbJo2m943iBsBRgrAGOEFhMHDO90WMUkfdJECxPcHpWmkxregb17bhgiIhvFJB9ac4dx3cr3ZpsxpqTzIc61BaUiv90=
   opencover_version: 4.7.1221
-  codecov_version: 0.2.4
+  codecov_uploader_version: 0.7.1
   report_generator_version: 5.2.0
 
 matrix:
@@ -56,7 +56,7 @@ after_build:
 
 before_test:
   - nuget install OpenCover -Version %opencover_version% -OutputDirectory packages
-  - nuget install CodecovUploader -Version %codecov_version% -OutputDirectory packages
+  - nuget install CodecovUploader -Version %codecov_uploader_version% -OutputDirectory packages
   - nuget install ReportGenerator -Version %report_generator_version% -OutputDirectory packages
   - |-
     printf "dotnet test ./Test/%APPVEYOR_PROJECT_NAME%.Test/bin/x64/%CONFIGURATION%/net8.0-windows7.0/%APPVEYOR_PROJECT_NAME%.Test.dll -l console;verbosity=detailed\n" > run-tests.bat
@@ -67,7 +67,7 @@ before_test:
   - |-
     printf ".\packages\OpenCover.%opencover_version%\Tools\OpenCover.Console.exe -register:user -returntargetcode -target:\x25\x31 -mergeoutput -output:""Coverage-%APPVEYOR_PROJECT_NAME%.xml""\n" > opencover.bat
   - |-
-    printf ".\packages\CodecovUploader.%codecov_version%\Tools\Codecov.exe -f ""Coverage-%APPVEYOR_PROJECT_NAME%.xml""\n" > after-test.bat
+    printf ".\packages\CodecovUploader.%codecov_uploader_version%\Tools\Codecov.exe -f ""Coverage-%APPVEYOR_PROJECT_NAME%.xml""\n" > after-test.bat
     printf ".\packages\ReportGenerator.%report_generator_version%\Tools\Net8.0\ReportGenerator.exe ""-reports:Coverage-%APPVEYOR_PROJECT_NAME%.xml"" -targetdir:.\CoverageReports ""-assemblyfilters:-Microsoft*;+%APPVEYOR_PROJECT_NAME%"" ""-filefilters:-*.g.cs"" -reporttypes:textsummary\n" >> after-test.bat
     printf "powershell $summary = Get-Content .\CoverageReports\Summary.txt -Raw ; Write-Output $summary ; $pattern = 'Branch coverage' + [char]0x003A + ' 100' + [char]0x0025 ; if ($summary -NotMatch $pattern) { exit -1 }\n" >> after-test.bat
 
