@@ -29,10 +29,11 @@ matrix:
 before_build:
   - nuget restore %APPVEYOR_PROJECT_NAME%.sln
   - nuget install GitCommitId -DependencyVersion Highest -OutputDirectory packages
+  - dotnet restore
 
 configuration:
-  - Release
   - Debug
+  - Release
 
 build:
   project: $(APPVEYOR_PROJECT_NAME).sln
@@ -110,7 +111,7 @@ deploy:
     artifact: $(APPVEYOR_PROJECT_NAME)-Package-Release
     skip_symbols: true
     api_key:
-      secure: gmxGdYXre5ryN4BlRVa0qJM++Sw86tRiKT4hpH5/OTK2daKRpeiOxFsVWpPLGJ+e
+      secure: uWTgpdAmDlZwb4//7sBgzFwN0HGnNCKpVUyRl2V7HPznoSDaa6yBar/KE6jLDZl9
     on:
       branch: deployment
       configuration: Release
