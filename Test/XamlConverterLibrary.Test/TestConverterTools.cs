@@ -1,6 +1,5 @@
 ﻿namespace XamlConverterLibrary.Test;
 
-using System;
 using System.Collections.Generic;
 using Converters;
 using NUnit.Framework;
