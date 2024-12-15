@@ -27,10 +27,7 @@ public partial class BooleanToObjectConverter : IValueConverter
     /// Otherwise, if <paramref name="value"/> is <see langword="true"/>, returns the second item in the collection.
     /// Otherwise, returns the first item in the collection.
     /// </returns>
-    public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return Convert(value, parameter);
-    }
+    public object Convert(object? value, Type targetType, object parameter, CultureInfo culture) => Convert(value, parameter);
 
     /// <summary>
     /// Converter from a boolean to the first or second object of a collection.
@@ -80,10 +77,9 @@ public partial class BooleanToObjectConverter : IValueConverter
     /// </returns>
     [Access("public")]
     [Require("targetType == typeof(bool) || targetType == typeof(bool?)")]
-    private static object? ConvertBackVerified(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return ConvertBack(value, parameter);
-    }
+#pragma warning disable IDE0060 // Remove unused parameter
+    private static object? ConvertBackVerified(object value, Type targetType, object parameter, CultureInfo culture) => ConvertBack(value, parameter);
+#pragma warning restore IDE0060 // Remove unused parameter
 
     /// <summary>
     /// Converts an object to a <see cref="bool"/> instance in a binding.
@@ -100,9 +96,7 @@ public partial class BooleanToObjectConverter : IValueConverter
     [Require("Items.Count >= 2")]
     private static object? ConvertBackVerified(object value, IList items)
     {
-        if (items.Count > 2 && value.Equals(items[2]))
-            return null;
-        else
-            return value.Equals(items[1]);
+        object? Result = items.Count > 2 && value.Equals(items[2]) ? null : value.Equals(items[1]);
+        return Result;
     }
 }

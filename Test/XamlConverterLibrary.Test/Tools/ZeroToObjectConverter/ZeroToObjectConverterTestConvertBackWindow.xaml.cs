@@ -6,7 +6,7 @@ using System.Windows.Controls;
 /// <summary>
 /// Interaction logic for TestWindow.xaml
 /// </summary>
-public partial class ZeroToObjectConverterTestConvertBackWindow : Window
+internal partial class ZeroToObjectConverterTestConvertBackWindow : Window
 {
     public ZeroToObjectConverterTestConvertBackWindow()
     {

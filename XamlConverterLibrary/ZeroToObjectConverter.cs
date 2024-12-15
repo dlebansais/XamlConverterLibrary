@@ -27,10 +27,7 @@ public partial class ZeroToObjectConverter : IValueConverter
     /// Otherwise, if <paramref name="value"/> is a <see cref="int"/> (or convertible) and non-zero, or a <see cref="Nullable{Int}"/> and also non-zero, returns the second item in the collection.
     /// Otherwise, returns the first item in the collection.
     /// </returns>
-    public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return Convert(value, parameter);
-    }
+    public object Convert(object? value, Type targetType, object parameter, CultureInfo culture) => Convert(value, parameter);
 
     /// <summary>
     /// Converter from an int (or convertible) to the first or second object of a collection.
@@ -87,21 +84,37 @@ public partial class ZeroToObjectConverter : IValueConverter
     private static bool ConvertValueFromNumeric(object? value, out int intValue)
     {
         if (value is int AsInt)
+        {
             intValue = AsInt;
+        }
         else if (value is byte AsByte)
+        {
             intValue = AsByte;
+        }
         else if (value is sbyte AsSByte)
+        {
             intValue = AsSByte;
+        }
         else if (value is short AsShort)
+        {
             intValue = AsShort;
+        }
         else if (value is ushort AsUShort)
+        {
             intValue = AsUShort;
+        }
         else if (value is uint AsUInt)
+        {
             intValue = (int)AsUInt;
+        }
         else if (value is long AsLong)
+        {
             intValue = (int)AsLong;
+        }
         else if (value is ulong AsULong)
+        {
             intValue = (int)AsULong;
+        }
         else
         {
             intValue = 0;
@@ -114,13 +127,21 @@ public partial class ZeroToObjectConverter : IValueConverter
     private static bool ConvertValueFromNullableSmallNumeric(object? value, out int intValue)
     {
         if (value is byte?)
+        {
             intValue = ((byte?)value) ?? 0;
+        }
         else if (value is sbyte?)
+        {
             intValue = ((sbyte?)value) ?? 0;
+        }
         else if (value is short?)
+        {
             intValue = ((short?)value) ?? 0;
+        }
         else if (value is ushort?)
+        {
             intValue = ((ushort?)value) ?? 0;
+        }
         else
         {
             intValue = 0;
@@ -133,13 +154,21 @@ public partial class ZeroToObjectConverter : IValueConverter
     private static bool ConvertValueFromNullableLargeNumeric(object? value, out int intValue)
     {
         if (value is int?)
+        {
             intValue = ((int?)value) ?? 0;
+        }
         else if (value is uint?)
+        {
             intValue = (int)(((uint?)value) ?? 0);
+        }
         else if (value is long?)
+        {
             intValue = (int)(((long?)value) ?? 0);
+        }
         else if (value is ulong?)
+        {
             intValue = (int)(((ulong?)value) ?? 0);
+        }
         else
         {
             intValue = 0;
@@ -152,11 +181,17 @@ public partial class ZeroToObjectConverter : IValueConverter
     private static bool ConvertValueFromOtherTypes(object value, out int intValue)
     {
         if (value is string AsString)
+        {
             intValue = AsString.Length;
+        }
         else if (value.GetType().IsEnum)
+        {
             intValue = (int)value;
+        }
         else if (value is IEnumerable AsEnumerable)
+        {
             intValue = AsEnumerable.GetEnumerator().MoveNext() ? 1 : 0;
+        }
         else
         {
             intValue = 0;
@@ -178,10 +213,7 @@ public partial class ZeroToObjectConverter : IValueConverter
     /// Otherwise, if <paramref name="value"/> is equal to the second item in the collection, returns 1.
     /// Otherwise, returns 0.
     /// </returns>
-    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return ConvertBack(value, parameter);
-    }
+    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => ConvertBack(value, parameter);
 
     /// <summary>
     /// Converts an object to an <see cref="int"/> instance in a binding.
@@ -198,9 +230,7 @@ public partial class ZeroToObjectConverter : IValueConverter
     [Require("Items.Count >= 2")]
     private static object? ConvertBackVerified(object value, IList items)
     {
-        if (items.Count > 2 && value.Equals(items[2]))
-            return null;
-        else
-            return value.Equals(items[1]) ? 1 : 0;
+        object? Result = items.Count > 2 && value.Equals(items[2]) ? null : value.Equals(items[1]) ? 1 : 0;
+        return Result;
     }
 }

@@ -1,22 +1,26 @@
 ﻿<Window x:Class="XamlConverterLibrary.Test.EnumToIndexConverterTestConvertWindow"
+        x:ClassModifier="internal"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
         xmlns:conv="clr-namespace:Converters;assembly=XamlConverterLibrary">
     <Window.Resources>
         <conv:EnumToIndexConverter x:Key="convEnumToIndex"/>
     </Window.Resources>
     <Grid>
-        <ComboBox x:Name="EnumPropertyIndexZero" SelectedIndex="{Binding EnumPropertyIndexZero, Converter={StaticResource convEnumToIndex}}">
+        <ComboBox x:Name="EnumPropertyIndexZero" SelectedIndex="{Binding EnumPropertyIndexZero, Converter={StaticResource convEnumToIndex}}" d:SelectedIndex="0">
             <ComboBoxItem>Zero</ComboBoxItem>
             <ComboBoxItem>One</ComboBoxItem>
             <ComboBoxItem>Two</ComboBoxItem>
         </ComboBox>
-        <ComboBox x:Name="EnumPropertyIndexOne" SelectedIndex="{Binding EnumPropertyIndexOne, Converter={StaticResource convEnumToIndex}}">
+        <ComboBox x:Name="EnumPropertyIndexOne" SelectedIndex="{Binding EnumPropertyIndexOne, Converter={StaticResource convEnumToIndex}}" d:SelectedIndex="0">
             <ComboBoxItem>Zero</ComboBoxItem>
             <ComboBoxItem>One</ComboBoxItem>
             <ComboBoxItem>Two</ComboBoxItem>
         </ComboBox>
-        <ComboBox x:Name="EnumPropertyIndexTwo" SelectedIndex="{Binding EnumPropertyIndexTwo, Converter={StaticResource convEnumToIndex}}">
+        <ComboBox x:Name="EnumPropertyIndexTwo" SelectedIndex="{Binding EnumPropertyIndexTwo, Converter={StaticResource convEnumToIndex}}" d:SelectedIndex="0">
             <ComboBoxItem>Zero</ComboBoxItem>
             <ComboBoxItem>One</ComboBoxItem>
             <ComboBoxItem>Two</ComboBoxItem>

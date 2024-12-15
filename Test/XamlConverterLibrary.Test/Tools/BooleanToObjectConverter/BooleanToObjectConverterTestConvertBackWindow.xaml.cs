@@ -6,7 +6,7 @@ using System.Windows.Controls;
 /// <summary>
 /// Interaction logic for TestWindow.xaml
 /// </summary>
-public partial class BooleanToObjectConverterTestConvertBackWindow : Window
+internal partial class BooleanToObjectConverterTestConvertBackWindow : Window
 {
     public BooleanToObjectConverterTestConvertBackWindow()
     {

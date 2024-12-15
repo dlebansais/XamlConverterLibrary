@@ -19,10 +19,7 @@ public partial class PassthroughConverter : IValueConverter
     /// <param name="parameter">The converter parameter to use (ignored).</param>
     /// <param name="culture">The culture to use in the converter (ignored).</param>
     /// <returns><paramref name="value"/>.</returns>
-    public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return Convert(value!);
-    }
+    public object Convert(object? value, Type targetType, object parameter, CultureInfo culture) => Convert(value!);
 
     /// <summary>
     /// Converts a value leaving it unchanged as long as it is not <see langword="null"/>.
@@ -30,10 +27,7 @@ public partial class PassthroughConverter : IValueConverter
     /// <param name="value">The value produced by the binding source. Must not be <see langword="null"/>.</param>
     /// <returns><paramref name="value"/>.</returns>
     [RequireNotNull(nameof(value))]
-    private static object ConvertVerified(object value)
-    {
-        return value;
-    }
+    private static object ConvertVerified(object value) => value;
 
     /// <summary>
     /// Converts a value leaving it unchanged as long as it is not <see langword="null"/>.
@@ -43,10 +37,7 @@ public partial class PassthroughConverter : IValueConverter
     /// <param name="parameter">The converter parameter to use (ignored).</param>
     /// <param name="culture">The culture to use in the converter (ignored).</param>
     /// <returns><paramref name="value"/>.</returns>
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return ConvertBack(value);
-    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => ConvertBack(value);
 
     /// <summary>
     /// Converts a value leaving it unchanged as long as it is not <see langword="null"/>.
@@ -54,8 +45,5 @@ public partial class PassthroughConverter : IValueConverter
     /// <param name="value">The value that is produced by the binding target. Must not be <see langword="null"/>.</param>
     /// <returns><paramref name="value"/>.</returns>
     [RequireNotNull(nameof(value))]
-    private static object ConvertBackVerified(object value)
-    {
-        return value;
-    }
+    private static object ConvertBackVerified(object value) => value;
 }

@@ -5,7 +5,7 @@ using System.Windows;
 /// <summary>
 /// Interaction logic for TestWindow.xaml
 /// </summary>
-public partial class NullToObjectConverterTestConvertWindow : Window
+internal partial class NullToObjectConverterTestConvertWindow : Window
 {
     public NullToObjectConverterTestConvertWindow()
     {

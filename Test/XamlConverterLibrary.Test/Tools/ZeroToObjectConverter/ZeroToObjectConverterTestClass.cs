@@ -30,6 +30,6 @@ internal class ZeroToObjectConverterTestClass
     public string ZeroLengthStringProperty { get; } = string.Empty;
     public string NonZeroLengthStringProperty { get; } = "Not zero";
     public ActionTargets EnumProperty { get; } = ActionTargets.Default;
-    public List<string> ZeroCountListProperty { get; } = new();
-    public List<string> NonZeroCountListProperty { get; } = new() { string.Empty };
+    public List<string> ZeroCountListProperty { get; } = [];
+    public List<string> NonZeroCountListProperty { get; } = [string.Empty];
 }

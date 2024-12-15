@@ -5,7 +5,7 @@ using System.Windows;
 /// <summary>
 /// Interaction logic for TestWindow.xaml
 /// </summary>
-public partial class BooleanToObjectConverterTestConvertWindow : Window
+internal partial class BooleanToObjectConverterTestConvertWindow : Window
 {
     public BooleanToObjectConverterTestConvertWindow()
     {

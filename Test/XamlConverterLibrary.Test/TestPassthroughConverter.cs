@@ -4,7 +4,7 @@ using System.Threading;
 using NUnit.Framework;
 
 [TestFixture]
-public class TestPassthroughConverter
+internal class TestPassthroughConverter
 {
     [Test]
     [Apartment(ApartmentState.STA)]

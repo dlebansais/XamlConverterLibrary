@@ -1,7 +1,6 @@
 ﻿namespace Converters;
 
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -27,10 +26,7 @@ internal static partial class ConverterTools
                 return true;
         }
 
-        if (!targetType.IsValueType)
-            return true;
-
-        return false;
+        return !targetType.IsValueType;
     }
 
     /// <summary>
@@ -42,11 +38,11 @@ internal static partial class ConverterTools
     [RequireNotNull(nameof(targetType))]
     private static bool CanCreateInstanceOfVerified(this Type targetType)
     {
-        var Fields = targetType.GetFields();
-        var StaticFieldInfo = Fields.FirstOrDefault(IsStaticInstance);
+        FieldInfo[] Fields = targetType.GetFields();
+        FieldInfo? StaticFieldInfo = Fields.FirstOrDefault(IsStaticInstance);
 
-        var Constructors = targetType.GetConstructors();
-        var ParameterlessConstructorInfo = Constructors.FirstOrDefault((ConstructorInfo constructor) => constructor.GetParameters().Length == 0);
+        ConstructorInfo[] Constructors = targetType.GetConstructors();
+        ConstructorInfo? ParameterlessConstructorInfo = Constructors.FirstOrDefault((ConstructorInfo constructor) => constructor.GetParameters().Length == 0);
 
         object? NullableInstance = null;
 
@@ -54,7 +50,7 @@ internal static partial class ConverterTools
             NullableInstance = StaticFieldInfo.GetValue(null);
 
         if (ParameterlessConstructorInfo is not null)
-            NullableInstance = ParameterlessConstructorInfo.Invoke(Array.Empty<object>());
+            NullableInstance = ParameterlessConstructorInfo.Invoke([]);
 
         if (IsNullableValueType(targetType, out Type ValueType))
         {
@@ -68,13 +64,19 @@ internal static partial class ConverterTools
             ParameterInfo ValueParameter = Parameters[0];
             Contract.Require(ValueParameter.ParameterType == ValueType);
 
-            var CreateInstanceOfValueType = () => Activator.CreateInstance(ValueType);
+            object CreateInstanceOfValueType()
+            {
+                return Activator.CreateInstance(ValueType)!;
+            }
+
             object DefaultValueParameter = Contract.AssertNotNull(Contract.AssertNoThrow(CreateInstanceOfValueType));
             NullableInstance = ValueConstructorInfo.Invoke([DefaultValueParameter]);
         }
 
         if (NullableInstance is null)
+        {
             return false;
+        }
         else
         {
             LastInstance = NullableInstance;
@@ -106,15 +108,9 @@ internal static partial class ConverterTools
 
     private static bool IsStaticInstance(FieldInfo field)
     {
-        var Attributes = field.Attributes;
+        FieldAttributes Attributes = field.Attributes;
 
-        if (!Attributes.HasFlag(FieldAttributes.Static))
-            return false;
-
-        if (!Attributes.HasFlag(FieldAttributes.InitOnly))
-            return false;
-
-        return true;
+        return Attributes.HasFlag(FieldAttributes.Static) && Attributes.HasFlag(FieldAttributes.InitOnly);
     }
 
     /// <summary>
@@ -124,8 +120,8 @@ internal static partial class ConverterTools
     /// <remarks>Reading this property is valid if and only if <see cref="CanCreateInstanceOf(Type)"/> returned true.</remarks>
     public static object LastInstance
     {
-        get { return Contract.AssertNotNull(LastInstanceInternal.Value); }
-        private set { LastInstanceInternal.Value = value; }
+        get => Contract.AssertNotNull(LastInstanceInternal.Value);
+        private set => LastInstanceInternal.Value = value;
     }
 
     private static readonly ThreadLocal<object> LastInstanceInternal = new();

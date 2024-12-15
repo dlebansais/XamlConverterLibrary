@@ -25,10 +25,7 @@ public partial class NullToObjectConverter : IValueConverter
     /// If <paramref name="value"/> is not <see langword="null"/>, the converter returns the second item in the collection.
     /// Otherwise, the converter returns the first item in the collection.
     /// </returns>
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return Convert(value, parameter);
-    }
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => Convert(value, parameter);
 
     /// <summary>
     /// Converter from a nullable reference to the first or second item in a collection.
@@ -65,7 +62,9 @@ public partial class NullToObjectConverter : IValueConverter
     [RequireNotNull(nameof(targetType))]
     [Require("TargetType.IsNullable()")]
     [Require("TargetType.CanCreateInstanceOf()")]
+#pragma warning disable IDE0060 // Remove unused parameter
     private static object? ConvertBackVerified(object value, Type targetType, object parameter, CultureInfo culture)
+#pragma warning restore IDE0060 // Remove unused parameter
     {
         // This instance is obtained as a side effect of the call to CanCreateInstanceOf(targetType).
         object Instance = Contract.AssertNotNull(ConverterTools.LastInstance);
@@ -90,7 +89,5 @@ public partial class NullToObjectConverter : IValueConverter
     [RequireNotNull(nameof(instance))]
     private static T? ConvertBackVerified<T>(object value, IList items, T instance)
         where T : class
-    {
-        return value.Equals(items[1]) ? instance : null;
-    }
+        => value.Equals(items[1]) ? instance : null;
 }

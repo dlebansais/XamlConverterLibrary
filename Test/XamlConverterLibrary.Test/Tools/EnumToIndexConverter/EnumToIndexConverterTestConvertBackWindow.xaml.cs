@@ -6,7 +6,7 @@ using System.Windows.Controls.Primitives;
 /// <summary>
 /// Interaction logic for TestWindow.xaml
 /// </summary>
-public partial class EnumToIndexConverterTestConvertBackWindow : Window
+internal partial class EnumToIndexConverterTestConvertBackWindow : Window
 {
     public EnumToIndexConverterTestConvertBackWindow()
     {

@@ -5,7 +5,7 @@ using System.Windows;
 /// <summary>
 /// Interaction logic for TestWindow.xaml
 /// </summary>
-public partial class EnumToIndexConverterTestConvertWindow : Window
+internal partial class EnumToIndexConverterTestConvertWindow : Window
 {
     public EnumToIndexConverterTestConvertWindow()
     {

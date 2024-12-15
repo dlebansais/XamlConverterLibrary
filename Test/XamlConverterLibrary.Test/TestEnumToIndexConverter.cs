@@ -4,7 +4,7 @@ using System.Threading;
 using NUnit.Framework;
 
 [TestFixture]
-public class TestEnumToIndexConverter
+internal class TestEnumToIndexConverter
 {
     [Test]
     [Apartment(ApartmentState.STA)]

@@ -10,12 +10,11 @@ internal class StaticMutableFieldTestClass
 #pragma warning restore CS0649 // Field 'PrivateStaticTestClass.PrivateStaticField' is never assigned to, and will always have its default value null
 #pragma warning restore CS0169 // The field 'PrivateStaticTestClass.PrivateStaticField' is never used
 
+#pragma warning disable IDE0060 // Remove unused parameter
     public StaticMutableFieldTestClass(string unused1, string unused2)
+#pragma warning restore IDE0060 // Remove unused parameter
     {
     }
 
-    public static void SetMutableField()
-    {
-        StaticMutableField = string.Empty;
-    }
+    public static void SetMutableField() => StaticMutableField = string.Empty;
 }

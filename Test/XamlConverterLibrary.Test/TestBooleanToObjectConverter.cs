@@ -4,7 +4,7 @@ using System.Threading;
 using NUnit.Framework;
 
 [TestFixture]
-public class TestBooleanToObjectConverter
+internal class TestBooleanToObjectConverter
 {
     [Test]
     [Apartment(ApartmentState.STA)]

@@ -4,7 +4,7 @@ using System.Threading;
 using NUnit.Framework;
 
 [TestFixture]
-public class TestZeroToObjectConverter
+internal class TestZeroToObjectConverter
 {
     [Test]
     [Apartment(ApartmentState.STA)]

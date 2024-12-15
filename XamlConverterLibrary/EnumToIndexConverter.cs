@@ -21,10 +21,9 @@ public partial class EnumToIndexConverter : IValueConverter
     /// <returns>The index of <paramref name="value"/> in the enumeration.</returns>
     [Access("public")]
     [Require("value is Enum")]
-    private static object ConvertVerified(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return Convert((Enum)value);
-    }
+#pragma warning disable IDE0060 // Remove unused parameter
+    private static object ConvertVerified(object value, Type targetType, object parameter, CultureInfo culture) => Convert((Enum)value);
+#pragma warning restore IDE0060 // Remove unused parameter
 
     /// <summary>
     /// Converter from an enum value to its index in the enumeration.
@@ -36,7 +35,8 @@ public partial class EnumToIndexConverter : IValueConverter
     private static object ConvertVerified(Enum value)
     {
         Array Values = value.GetType().GetEnumValues();
-        return Array.IndexOf(Values, value, 0);
+        object Result = Array.IndexOf(Values, value, 0);
+        return Result;
     }
 
     /// <summary>
@@ -47,10 +47,7 @@ public partial class EnumToIndexConverter : IValueConverter
     /// <param name="parameter">The converter parameter to use (ignored).</param>
     /// <param name="culture">The culture to use in the converter (ignored).</param>
     /// <returns>The enum value at the index provided by <paramref name="value"/>.</returns>
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return ConvertBack(value, targetType);
-    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => ConvertBack(value, targetType);
 
     /// <summary>
     /// Converter from the index of an enum to its value.

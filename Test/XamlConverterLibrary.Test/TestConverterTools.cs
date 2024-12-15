@@ -6,7 +6,7 @@ using Converters;
 using NUnit.Framework;
 
 [TestFixture]
-public class TestConverterTools
+internal class TestConverterTools
 {
     [Test]
     public void TestIsNullable()

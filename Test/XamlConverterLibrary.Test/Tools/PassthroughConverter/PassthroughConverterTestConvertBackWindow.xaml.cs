@@ -6,7 +6,7 @@ using System.Windows.Controls;
 /// <summary>
 /// Interaction logic for TestWindow.xaml
 /// </summary>
-public partial class PassthroughConverterTestConvertBackWindow : Window
+internal partial class PassthroughConverterTestConvertBackWindow : Window
 {
     public PassthroughConverterTestConvertBackWindow()
     {
@@ -15,8 +15,5 @@ public partial class PassthroughConverterTestConvertBackWindow : Window
         Loaded += OnLoaded;
     }
 
-    private void OnLoaded(object sender, RoutedEventArgs e)
-    {
-        StringProperty.SetCurrentValue(TextBox.TextProperty, "Test");
-    }
+    private void OnLoaded(object sender, RoutedEventArgs e) => StringProperty.SetCurrentValue(TextBox.TextProperty, "Test");
 }
