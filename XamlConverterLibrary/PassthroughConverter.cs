@@ -19,13 +19,15 @@ public partial class PassthroughConverter : IValueConverter
     /// <param name="parameter">The converter parameter to use (ignored).</param>
     /// <param name="culture">The culture to use in the converter (ignored).</param>
     /// <returns><paramref name="value"/>.</returns>
-    public object Convert(object? value, Type targetType, object parameter, CultureInfo culture) => Convert(value!);
+    public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+        => value is null ? throw new ArgumentNullException(nameof(value)) : ConvertVerified(value);
 
     /// <summary>
     /// Converts a value leaving it unchanged as long as it is not <see langword="null"/>.
     /// </summary>
     /// <param name="value">The value produced by the binding source. Must not be <see langword="null"/>.</param>
     /// <returns><paramref name="value"/>.</returns>
+    [Access("public", "static")]
     [RequireNotNull(nameof(value))]
     private static object ConvertVerified(object value) => value;
 

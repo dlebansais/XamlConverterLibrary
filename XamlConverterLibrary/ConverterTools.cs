@@ -66,7 +66,7 @@ internal static partial class ConverterTools
 
             object CreateInstanceOfValueType()
             {
-                return Activator.CreateInstance(ValueType)!;
+                return Contract.AssertNotNull(Activator.CreateInstance(ValueType));
             }
 
             object DefaultValueParameter = Contract.AssertNotNull(Contract.AssertNoThrow(CreateInstanceOfValueType));

@@ -7,13 +7,13 @@ using Converters;
 using NUnit.Framework;
 
 [TestFixture]
-internal class TestPassthroughConverter
+internal class TestOneWayOnlyConverter
 {
     [Test]
     [Apartment(ApartmentState.STA)]
     public void TestConvert()
     {
-        PassthroughConverterTestConvertWindow Dlg = new();
+        OneWayOnlyConverterTestConvertWindow Dlg = new();
         Dlg.Show();
 
         Assert.That(Dlg.StringProperty.Text, Is.EqualTo("Test"));
@@ -23,7 +23,7 @@ internal class TestPassthroughConverter
     [Apartment(ApartmentState.STA)]
     public void TestConvertNull()
     {
-        PassthroughConverter Converter = new();
+        SampleOneWayOnlyConverter Converter = new();
 
         _ = Assert.Throws<ArgumentNullException>(() => Converter.Convert(null, GetType(), new object(), CultureInfo.InvariantCulture));
     }
@@ -32,10 +32,8 @@ internal class TestPassthroughConverter
     [Apartment(ApartmentState.STA)]
     public void TestConvertBack()
     {
-        PassthroughConverterTestConvertBackWindow Dlg = new();
-        Dlg.Show();
-        PassthroughConverterTestClass DataContext = (PassthroughConverterTestClass)Dlg.DataContext;
+        SampleOneWayOnlyConverter Converter = new();
 
-        Assert.That(DataContext.StringProperty, Is.EqualTo("Test"));
+        _ = Assert.Throws<NotSupportedException>(() => Converter.ConvertBack(new object(), GetType(), new object(), CultureInfo.InvariantCulture));
     }
 }
