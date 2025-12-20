@@ -8,14 +8,14 @@
         <Platforms>x64</Platforms>
 
         <RootNamespace>Converters</RootNamespace>
-        <Version>2.0.0</Version>
-        <AssemblyVersion>2.0.0.23</AssemblyVersion>
-        <FileVersion>2.0.0.23</FileVersion>
+        <Version>3.0.0</Version>
+        <AssemblyVersion>3.0.0.24</AssemblyVersion>
+        <FileVersion>3.0.0.24</FileVersion>
         <Authors>David Le Bansais</Authors>
         <Company />
         <Product />
         <Description>Common converters for WPF applications</Description>
-        <Copyright>Copyright © 2024 David Le Bansais</Copyright>
+        <Copyright>Copyright © 2025 David Le Bansais</Copyright>
         <RepositoryUrl>https://github.com/dlebansais/XamlConverterLibrary</RepositoryUrl>
         <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
 
@@ -37,6 +37,15 @@
         <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(APPVEYOR_PULL_REQUEST_NUMBER)' != ''">
+        <DefineConstants>$(DefineConstants);FRIEND_ASSEMBLY_NOT_SIGNED</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(APPVEYOR_PULL_REQUEST_NUMBER)' == ''">
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>..\signing.snk</AssemblyOriginatorKeyFile>
+    </PropertyGroup>
+
     <ItemGroup>
         <None Include="..\.editorconfig" Link=".editorconfig" />
     </ItemGroup>
@@ -50,7 +59,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="IDisposableAnalyzers" Version="4.0.8">
+        <PackageReference Include="dlebansais.IDisposableAnalyzers" Version="4.0.8.10">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
@@ -58,11 +67,11 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Method.Contracts.Analyzers-Debug" Version="2.0.0" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+        <PackageReference Include="dlebansais.Method.Contracts.Analyzers-Debug" Version="2.0.6" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Method.Contracts.Analyzers" Version="2.0.0" Condition="'$(Configuration)|$(Platform)'!='Debug|x64'">
+        <PackageReference Include="dlebansais.Method.Contracts.Analyzers" Version="2.0.6" Condition="'$(Configuration)|$(Platform)'!='Debug|x64'">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
@@ -74,8 +83,8 @@
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
 
-        <PackageReference Include="Method.Contracts-Debug" Version="2.0.0" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-        <PackageReference Include="Method.Contracts" Version="2.0.0" Condition="'$(Configuration)|$(Platform)'!='Debug|x64'" />
+        <PackageReference Include="dlebansais.Method.Contracts-Debug" Version="2.0.5" GeneratePathProperty="true" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+        <PackageReference Include="dlebansais.Method.Contracts" Version="2.0.5" GeneratePathProperty="true" Condition="'$(Configuration)|$(Platform)'!='Debug|x64'" />
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(SolutionDir)'!='*Undefined*'">
