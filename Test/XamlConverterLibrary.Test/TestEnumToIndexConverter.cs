@@ -13,7 +13,7 @@ internal class TestEnumToIndexConverter
         EnumToIndexConverterTestConvertWindow Dlg = new();
         Dlg.Show();
 
-        Assert.That(Dlg.EnumPropertyIndexZero.SelectedIndex, Is.EqualTo(0));
+        Assert.That(Dlg.EnumPropertyIndexZero.SelectedIndex, Is.Zero);
         Assert.That(Dlg.EnumPropertyIndexOne.SelectedIndex, Is.EqualTo(1));
         Assert.That(Dlg.EnumPropertyIndexTwo.SelectedIndex, Is.EqualTo(2));
     }

@@ -42,7 +42,7 @@ internal static partial class ConverterTools
         FieldInfo? StaticFieldInfo = Fields.FirstOrDefault(IsStaticInstance);
 
         ConstructorInfo[] Constructors = targetType.GetConstructors();
-        ConstructorInfo? ParameterlessConstructorInfo = Constructors.FirstOrDefault((ConstructorInfo constructor) => constructor.GetParameters().Length == 0);
+        ConstructorInfo? ParameterlessConstructorInfo = Constructors.FirstOrDefault(constructor => constructor.GetParameters().Length == 0);
 
         object? NullableInstance = null;
 
