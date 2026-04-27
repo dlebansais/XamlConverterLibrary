@@ -6,6 +6,9 @@ branches:
     - master
     - deployment
 
+# Do not build on tags
+skip_tags: true
+
 # Skipping commits with particular message or from specific user
 skip_commits:
   message: "*[skip ci]*"
@@ -94,7 +97,7 @@ deploy:
     release: $(VERSION_TAG)
     description: 'Automatic deployment'
     auth_token:
-      secure: hjfTFfWeXzkCbwNb/qPmZik9szwztg8bDIxWAM70ZVhQLIIMhLXj9+zQEdovEUfk
+      secure: wGFKd2yoaaq7+B6Evl2OZeePPHUzTDlYnDf7DCH26mJZc/nrYGjQ5XGiTZfTWmvW
     artifact: $(APPVEYOR_PROJECT_NAME)-Package-Release
     draft: false
     prerelease: false
@@ -105,7 +108,7 @@ deploy:
     release: $(VERSION_TAG)
     description: 'Automatic deployment'
     auth_token:
-      secure: hjfTFfWeXzkCbwNb/qPmZik9szwztg8bDIxWAM70ZVhQLIIMhLXj9+zQEdovEUfk
+      secure: wGFKd2yoaaq7+B6Evl2OZeePPHUzTDlYnDf7DCH26mJZc/nrYGjQ5XGiTZfTWmvW
     artifact: $(APPVEYOR_PROJECT_NAME)-Package-Debug
     draft: false
     prerelease: false
@@ -116,7 +119,7 @@ deploy:
     artifact: $(APPVEYOR_PROJECT_NAME)-Package-Release
     skip_symbols: true
     api_key:
-      secure: Wrt1RLR81rx4nHwWR3jbGRqiaevBfViPxp9R08sRQKTQ24v6ZOiHcNHcBKZ8do4+
+      secure: nVIiaAk/COoMNi/OIDQ40dFBluznaIlKbpIUkxdA8HFxINY4YNkyis2sBjxByluw
     on:
       branch: deployment
       configuration: Release
@@ -124,7 +127,7 @@ deploy:
     artifact: $(APPVEYOR_PROJECT_NAME)-Package-Debug
     symbol_server: https://api.nuget.org/v3/index.json
     api_key:
-      secure: Wrt1RLR81rx4nHwWR3jbGRqiaevBfViPxp9R08sRQKTQ24v6ZOiHcNHcBKZ8do4+
+      secure: nVIiaAk/COoMNi/OIDQ40dFBluznaIlKbpIUkxdA8HFxINY4YNkyis2sBjxByluw
     on:
       branch: deployment
       configuration: Debug
@@ -134,7 +137,7 @@ deploy:
     artifact: $(APPVEYOR_PROJECT_NAME)-Package-Debug
     username: dlebansais
     api_key:
-      secure: 5tcSRVegOcTQlDtIaRuucZxjxp4BmVhrdVoxJtejCcfsCmBV+ZwyfSXrlRsF9QxZ
+      secure: 7DLdeObgZf+PG3CwBCFWr2UvW6IFBF4Lwa0SUxFeQbkWr6DJSwNPFDwuKXgX8Wfy
     on:
       branch: deployment
       configuration: Debug
@@ -144,7 +147,7 @@ deploy:
     skip_symbols: true
     username: dlebansais
     api_key:
-      secure: 5tcSRVegOcTQlDtIaRuucZxjxp4BmVhrdVoxJtejCcfsCmBV+ZwyfSXrlRsF9QxZ
+      secure: 7DLdeObgZf+PG3CwBCFWr2UvW6IFBF4Lwa0SUxFeQbkWr6DJSwNPFDwuKXgX8Wfy
     on:
       branch: deployment
       configuration: Release
