@@ -14,14 +14,11 @@ using Contracts;
 [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Instanciated in Xaml")]
 public partial class BooleanToObjectConverter : IValueConverter
 {
+    /// <inheritdoc cref="IValueConverter.Convert" />
     /// <summary>
     /// Converter from a boolean to the first or second object of a collection.
     /// Converter from a nullable boolean to the first, second or third object of a collection.
     /// </summary>
-    /// <param name="value">The value produced by the binding source. The type of <paramref name="value"/> must be either <see cref="bool"/> or <see cref="Nullable{Boolean}"/>.</param>
-    /// <param name="targetType">The type of the binding target property (ignored).</param>
-    /// <param name="parameter">The converter parameter to use. It must be a collection of objects containing at least two items.</param>
-    /// <param name="culture">The culture to use in the converter (ignored).</param>
     /// <returns>
     /// If <paramref name="parameter"/> is a collection with at least three items, and <paramref name="value"/> is <see langword="null"/>, returns the third item.
     /// Otherwise, if <paramref name="value"/> is <see langword="true"/>, returns the second item in the collection.
@@ -29,12 +26,11 @@ public partial class BooleanToObjectConverter : IValueConverter
     /// </returns>
     public object Convert(object? value, Type targetType, object parameter, CultureInfo culture) => Convert(value, parameter);
 
+    /// <inheritdoc cref="IValueConverter.ConvertBack" />
     /// <summary>
     /// Converter from a boolean to the first or second object of a collection.
     /// Converter from a nullable boolean to the first, second or third object of a collection.
     /// </summary>
-    /// <param name="value">The value produced by the binding source. The type of <paramref name="value"/> must be either <see cref="bool"/> or <see cref="Nullable{Boolean}"/>.</param>
-    /// <param name="items">The converter parameter to use. It must be a collection of objects containing at least two items.</param>
     /// <returns>
     /// If <paramref name="items"/> is a collection with at least three items, and <paramref name="value"/> is <see langword="null"/>, returns the third item.
     /// Otherwise, if <paramref name="value"/> is <see langword="true"/>, returns the second item in the collection.

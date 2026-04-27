@@ -14,13 +14,7 @@ public abstract class OneWayOnlyConverter : IValueConverter
     /// <inheritdoc cref="IValueConverter.Convert" />
     public abstract object Convert(object? value, Type targetType, object parameter, CultureInfo culture);
 
-    /// <summary>
-    /// Throws <see cref="NotSupportedException"/>.
-    /// </summary>
-    /// <param name="value"><paramref name="value"/> is not used.</param>
-    /// <param name="targetType"><paramref name="targetType"/> is not used.</param>
-    /// <param name="parameter"><paramref name="parameter"/> is not used.</param>
-    /// <param name="culture"><paramref name="culture"/> is not used.</param>
+    /// <inheritdoc cref="IValueConverter.ConvertBack" />
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         => throw new NotSupportedException();
 }

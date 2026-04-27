@@ -39,13 +39,10 @@ public partial class EnumToIndexConverter : IValueConverter
         return Result;
     }
 
+    /// <inheritdoc cref="IValueConverter.ConvertBack" />
     /// <summary>
     /// Converter from the index of an enum to its value.
     /// </summary>
-    /// <param name="value">The value that is produced by the binding target. It must be convertible to <see cref="int"/>.</param>
-    /// <param name="targetType">The type to convert to. It must be an enum.</param>
-    /// <param name="parameter">The converter parameter to use (ignored).</param>
-    /// <param name="culture">The culture to use in the converter (ignored).</param>
     /// <returns>The enum value at the index provided by <paramref name="value"/>.</returns>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => ConvertBack(value, targetType);
 

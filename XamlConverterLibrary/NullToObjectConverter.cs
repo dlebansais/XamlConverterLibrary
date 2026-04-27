@@ -14,24 +14,20 @@ using Contracts;
 [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Instanciated in Xaml")]
 public partial class NullToObjectConverter : IValueConverter
 {
+    /// <inheritdoc cref="IValueConverter.Convert" />
     /// <summary>
     /// Converter from a nullable reference to the first or second item in a collection.
     /// </summary>
-    /// <param name="value">The value produced by the binding source. The type of <paramref name="value"/> must be nullable.</param>
-    /// <param name="targetType">The type of the binding target property.</param>
-    /// <param name="parameter">The converter parameter to use. It must be a collection of objects containing exactly two items.</param>
-    /// <param name="culture">The culture to use in the converter (ignored).</param>
     /// <returns>
     /// If <paramref name="value"/> is not <see langword="null"/>, the converter returns the second item in the collection.
     /// Otherwise, the converter returns the first item in the collection.
     /// </returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => Convert(value, parameter);
 
+    /// <inheritdoc cref="IValueConverter.ConvertBack" />
     /// <summary>
     /// Converter from a nullable reference to the first or second item in a collection.
     /// </summary>
-    /// <param name="value">The value produced by the binding source. The type of <paramref name="value"/> must be nullable.</param>
-    /// <param name="items">The converter parameter to use. It must be a collection of objects containing exactly two items.</param>
     /// <returns>
     /// If <paramref name="value"/> is not <see langword="null"/>, the converter returns the second item in the collection.
     /// Otherwise, the converter returns the first item in the collection.
