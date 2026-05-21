@@ -16,7 +16,8 @@ internal static partial class ConverterTools
 #endif
     extension(Type targetType)
     {
-        // Remove this comment when the condition is removed. It's there only to avoid some error about formatting.
+        /* Remove this comment when the condition is removed. It's there only to avoid some error about formatting. */
+
 #if COMPILER_SUPPORT_EXTENSION_PARAM_NAME
         /// <summary>
         /// Checks whether the provided type is nullable.
@@ -40,7 +41,8 @@ internal static partial class ConverterTools
             return !targetType.IsValueType;
         }
 
-        // Remove this comment when the condition is removed. It's there only to avoid some error about formatting.
+        /* Remove this comment when the condition is removed. It's there only to avoid some error about formatting. */
+
 #if COMPILER_SUPPORT_EXTENSION_PARAM_NAME
         /// <summary>
         /// Checks whether creating an instance of the provided type is possible.
