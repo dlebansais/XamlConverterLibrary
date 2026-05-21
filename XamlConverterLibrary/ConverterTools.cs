@@ -13,11 +13,11 @@ internal static partial class ConverterTools
 {
 #if FRIEND_ASSEMBLY_NOT_SIGNED && COMPILER_SUPPORT_EXTENSION_PARAM_NAME
 #error TODO when pull requests start to support msbuild >= 18.3: restore <paramref name="targetType"/>
+#else
+#pragma warning disable IDE0055
 #endif
     extension(Type targetType)
     {
-        /* Remove this comment when the condition is removed. It's there only to avoid some error about formatting. */
-
 #if COMPILER_SUPPORT_EXTENSION_PARAM_NAME
         /// <summary>
         /// Checks whether the provided type is nullable.
@@ -40,8 +40,6 @@ internal static partial class ConverterTools
 
             return !targetType.IsValueType;
         }
-
-        /* Remove this comment when the condition is removed. It's there only to avoid some error about formatting. */
 
 #if COMPILER_SUPPORT_EXTENSION_PARAM_NAME
         /// <summary>
