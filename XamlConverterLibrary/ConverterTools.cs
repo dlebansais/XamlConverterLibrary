@@ -12,10 +12,11 @@ using Contracts;
 internal static partial class ConverterTools
 {
 #if FRIEND_ASSEMBLY_NOT_SIGNED && COMPILER_SUPPORT_EXTENSION_PARAM_NAME
-#error TODO: restore <paramref name="targetType"/>
+#error TODO when pull requests start to support msbuild >= 18.3: restore <paramref name="targetType"/>
 #endif
     extension(Type targetType)
     {
+        // Remove this comment when the condition is removed. It's there only to avoid some error about formatting.
 #if COMPILER_SUPPORT_EXTENSION_PARAM_NAME
         /// <summary>
         /// Checks whether the provided type is nullable.
@@ -39,6 +40,7 @@ internal static partial class ConverterTools
             return !targetType.IsValueType;
         }
 
+        // Remove this comment when the condition is removed. It's there only to avoid some error about formatting.
 #if COMPILER_SUPPORT_EXTENSION_PARAM_NAME
         /// <summary>
         /// Checks whether creating an instance of the provided type is possible.
