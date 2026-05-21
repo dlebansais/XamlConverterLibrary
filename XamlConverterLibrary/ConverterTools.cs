@@ -11,13 +11,22 @@ using Contracts;
 /// </summary>
 internal static partial class ConverterTools
 {
-    // TODO: restore <paramref name="targetType"/>
+#if FRIEND_ASSEMBLY_NOT_SIGNED && COMPILER_SUPPORT_EXTENSION_PARAM_NAME
+#error TODO: restore <paramref name="targetType"/>
+#endif
     extension(Type targetType)
     {
+#if COMPILER_SUPPORT_EXTENSION_PARAM_NAME
+        /// <summary>
+        /// Checks whether the provided type is nullable.
+        /// </summary>
+        /// <returns><see langword="true"/> if <paramref name="targetType"/> is nullable; Otherwise, <see langword="false"/>.</returns>
+#else
         /// <summary>
         /// Checks whether the provided type is nullable.
         /// </summary>
         /// <returns><see langword="true"/> if targetType is nullable; Otherwise, <see langword="false"/>.</returns>
+#endif
         internal bool IsNullable()
         {
             if (targetType.IsGenericType)
@@ -30,11 +39,19 @@ internal static partial class ConverterTools
             return !targetType.IsValueType;
         }
 
+#if COMPILER_SUPPORT_EXTENSION_PARAM_NAME
+        /// <summary>
+        /// Checks whether creating an instance of the provided type is possible.
+        /// </summary>
+        /// <returns><see langword="true"/> if creating an instance of <paramref name="targetType"/> is possible; Otherwise, <see langword="false"/>.</returns>
+        /// <remarks>This method has a side effect and saves the new instance of <paramref name="targetType"/> in thread-local storage if successful.</remarks>
+#else
         /// <summary>
         /// Checks whether creating an instance of the provided type is possible.
         /// </summary>
         /// <returns><see langword="true"/> if creating an instance of targetType is possible; Otherwise, <see langword="false"/>.</returns>
         /// <remarks>This method has a side effect and saves the new instance of targetType in thread-local storage if successful.</remarks>
+#endif
         internal bool CanCreateInstanceOf()
         {
             FieldInfo[] Fields = targetType.GetFields();
