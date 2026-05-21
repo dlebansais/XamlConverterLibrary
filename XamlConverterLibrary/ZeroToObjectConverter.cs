@@ -83,7 +83,34 @@ public partial class ZeroToObjectConverter : IValueConverter
         {
             intValue = AsInt;
         }
-        else if (value is byte AsByte)
+        else if (ConvertValueFromSmallNumeric(value, out int SmallIntValue))
+        {
+            intValue = SmallIntValue;
+        }
+        else if (value is uint AsUInt)
+        {
+            intValue = (int)AsUInt;
+        }
+        else if (value is long AsLong)
+        {
+            intValue = (int)AsLong;
+        }
+        else if (value is ulong AsULong)
+        {
+            intValue = (int)AsULong;
+        }
+        else
+        {
+            intValue = 0;
+            return false;
+        }
+
+        return true;
+    }
+
+    private static bool ConvertValueFromSmallNumeric(object? value, out int intValue)
+    {
+        if (value is byte AsByte)
         {
             intValue = AsByte;
         }
@@ -98,18 +125,6 @@ public partial class ZeroToObjectConverter : IValueConverter
         else if (value is ushort AsUShort)
         {
             intValue = AsUShort;
-        }
-        else if (value is uint AsUInt)
-        {
-            intValue = (int)AsUInt;
-        }
-        else if (value is long AsLong)
-        {
-            intValue = (int)AsLong;
-        }
-        else if (value is ulong AsULong)
-        {
-            intValue = (int)AsULong;
         }
         else
         {
