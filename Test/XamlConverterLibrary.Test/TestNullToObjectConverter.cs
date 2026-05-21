@@ -13,10 +13,13 @@ internal class TestNullToObjectConverter
         NullToObjectConverterTestConvertWindow Dlg = new();
         Dlg.Show();
 
-        Assert.That(Dlg.StringPropertyNull.IsVisible, Is.False);
-        Assert.That(Dlg.StringPropertyNotNull.IsVisible, Is.True);
-        Assert.That(Dlg.IntPropertyNull.IsVisible, Is.False);
-        Assert.That(Dlg.IntPropertyNotNull.IsVisible, Is.True);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(Dlg.StringPropertyNull.IsVisible, Is.False);
+            Assert.That(Dlg.StringPropertyNotNull.IsVisible, Is.True);
+            Assert.That(Dlg.IntPropertyNull.IsVisible, Is.False);
+            Assert.That(Dlg.IntPropertyNotNull.IsVisible, Is.True);
+        }
     }
 
     [Test]
@@ -27,9 +30,12 @@ internal class TestNullToObjectConverter
         Dlg.Show();
         NullToObjectConverterTestClass DataContext = (NullToObjectConverterTestClass)Dlg.DataContext;
 
-        Assert.That(DataContext.StringPropertyNull, Is.Not.Null);
-        Assert.That(DataContext.StringPropertyNotNull, Is.Null);
-        Assert.That(DataContext.IntPropertyNull, Is.Not.Null);
-        Assert.That(DataContext.IntPropertyNotNull, Is.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(DataContext.StringPropertyNull, Is.Not.Null);
+            Assert.That(DataContext.StringPropertyNotNull, Is.Null);
+            Assert.That(DataContext.IntPropertyNull, Is.Not.Null);
+            Assert.That(DataContext.IntPropertyNotNull, Is.Null);
+        }
     }
 }

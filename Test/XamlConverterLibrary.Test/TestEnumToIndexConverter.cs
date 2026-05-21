@@ -13,9 +13,12 @@ internal class TestEnumToIndexConverter
         EnumToIndexConverterTestConvertWindow Dlg = new();
         Dlg.Show();
 
-        Assert.That(Dlg.EnumPropertyIndexZero.SelectedIndex, Is.Zero);
-        Assert.That(Dlg.EnumPropertyIndexOne.SelectedIndex, Is.EqualTo(1));
-        Assert.That(Dlg.EnumPropertyIndexTwo.SelectedIndex, Is.EqualTo(2));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(Dlg.EnumPropertyIndexZero.SelectedIndex, Is.Zero);
+            Assert.That(Dlg.EnumPropertyIndexOne.SelectedIndex, Is.EqualTo(1));
+            Assert.That(Dlg.EnumPropertyIndexTwo.SelectedIndex, Is.EqualTo(2));
+        }
     }
 
     [Test]
@@ -26,8 +29,11 @@ internal class TestEnumToIndexConverter
         Dlg.Show();
         EnumToIndexConverterTestClass DataContext = (EnumToIndexConverterTestClass)Dlg.DataContext;
 
-        Assert.That(DataContext.EnumPropertyIndexZero, Is.EqualTo(EnumToIndexConverterTestEnum.IndexOne));
-        Assert.That(DataContext.EnumPropertyIndexOne, Is.EqualTo(EnumToIndexConverterTestEnum.IndexTwo));
-        Assert.That(DataContext.EnumPropertyIndexTwo, Is.EqualTo(EnumToIndexConverterTestEnum.IndexZero));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(DataContext.EnumPropertyIndexZero, Is.EqualTo(EnumToIndexConverterTestEnum.IndexOne));
+            Assert.That(DataContext.EnumPropertyIndexOne, Is.EqualTo(EnumToIndexConverterTestEnum.IndexTwo));
+            Assert.That(DataContext.EnumPropertyIndexTwo, Is.EqualTo(EnumToIndexConverterTestEnum.IndexZero));
+        }
     }
 }
