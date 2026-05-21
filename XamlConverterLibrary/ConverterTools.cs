@@ -11,76 +11,75 @@ using Contracts;
 /// </summary>
 internal static partial class ConverterTools
 {
-    /// <summary>
-    /// Checks whether the provided type is nullable.
-    /// </summary>
-    /// <param name="targetType">The type.</param>
-    /// <returns><see langword="true"/> if <paramref name="targetType"/> is nullable; Otherwise, <see langword="false"/>.</returns>
-    [RequireNotNull(nameof(targetType))]
-    private static bool IsNullableVerified(this Type targetType)
+    extension(Type targetType)
     {
-        if (targetType.IsGenericType)
+        /// <summary>
+        /// Checks whether the provided type is nullable.
+        /// </summary>
+        /// <returns><see langword="true"/> if <paramref name="targetType"/> is nullable; Otherwise, <see langword="false"/>.</returns>
+        internal bool IsNullable()
         {
-            Type GenericTypeDefinition = targetType.GetGenericTypeDefinition();
-            if (GenericTypeDefinition == typeof(Nullable<>))
-                return true;
-        }
-
-        return !targetType.IsValueType;
-    }
-
-    /// <summary>
-    /// Checks whether creating an instance of the provided type is possible.
-    /// </summary>
-    /// <param name="targetType">The type.</param>
-    /// <returns><see langword="true"/> if creating an instance of <paramref name="targetType"/> is possible; Otherwise, <see langword="false"/>.</returns>
-    /// <remarks>This method has a side effect and saves the new instance of <paramref name="targetType"/> in thread-local storage if successful.</remarks>
-    [RequireNotNull(nameof(targetType))]
-    private static bool CanCreateInstanceOfVerified(this Type targetType)
-    {
-        FieldInfo[] Fields = targetType.GetFields();
-        FieldInfo? StaticFieldInfo = Fields.FirstOrDefault(IsStaticInstance);
-
-        ConstructorInfo[] Constructors = targetType.GetConstructors();
-        ConstructorInfo? ParameterlessConstructorInfo = Constructors.FirstOrDefault(constructor => constructor.GetParameters().Length == 0);
-
-        object? NullableInstance = null;
-
-        if (StaticFieldInfo is not null)
-            NullableInstance = StaticFieldInfo.GetValue(null);
-
-        if (ParameterlessConstructorInfo is not null)
-            NullableInstance = ParameterlessConstructorInfo.Invoke([]);
-
-        if (IsNullableValueType(targetType, out Type ValueType))
-        {
-            ConstructorInfo[] ValidConstructors = Contract.AssertNotNull(Constructors);
-            Contract.Require(ValidConstructors.Length == 1);
-
-            ConstructorInfo ValueConstructorInfo = ValidConstructors[0];
-            ParameterInfo[] Parameters = ValueConstructorInfo.GetParameters();
-            Contract.Require(Parameters.Length == 1);
-
-            ParameterInfo ValueParameter = Parameters[0];
-            Contract.Require(ValueParameter.ParameterType == ValueType);
-
-            object CreateInstanceOfValueType()
+            if (targetType.IsGenericType)
             {
-                return Contract.AssertNotNull(Activator.CreateInstance(ValueType));
+                Type GenericTypeDefinition = targetType.GetGenericTypeDefinition();
+                if (GenericTypeDefinition == typeof(Nullable<>))
+                    return true;
             }
 
-            object DefaultValueParameter = Contract.AssertNotNull(Contract.AssertNoThrow(CreateInstanceOfValueType));
-            NullableInstance = ValueConstructorInfo.Invoke([DefaultValueParameter]);
+            return !targetType.IsValueType;
         }
 
-        if (NullableInstance is null)
+        /// <summary>
+        /// Checks whether creating an instance of the provided type is possible.
+        /// </summary>
+        /// <returns><see langword="true"/> if creating an instance of <paramref name="targetType"/> is possible; Otherwise, <see langword="false"/>.</returns>
+        /// <remarks>This method has a side effect and saves the new instance of <paramref name="targetType"/> in thread-local storage if successful.</remarks>
+        internal bool CanCreateInstanceOf()
         {
-            return false;
-        }
-        else
-        {
-            LastInstance = NullableInstance;
-            return true;
+            FieldInfo[] Fields = targetType.GetFields();
+            FieldInfo? StaticFieldInfo = Fields.FirstOrDefault(IsStaticInstance);
+
+            ConstructorInfo[] Constructors = targetType.GetConstructors();
+            ConstructorInfo? ParameterlessConstructorInfo = Constructors.FirstOrDefault(constructor => constructor.GetParameters().Length == 0);
+
+            object? NullableInstance = null;
+
+            if (StaticFieldInfo is not null)
+                NullableInstance = StaticFieldInfo.GetValue(null);
+
+            if (ParameterlessConstructorInfo is not null)
+                NullableInstance = ParameterlessConstructorInfo.Invoke([]);
+
+            if (IsNullableValueType(targetType, out Type ValueType))
+            {
+                ConstructorInfo[] ValidConstructors = Contract.AssertNotNull(Constructors);
+                Contract.Require(ValidConstructors.Length == 1);
+
+                ConstructorInfo ValueConstructorInfo = ValidConstructors[0];
+                ParameterInfo[] Parameters = ValueConstructorInfo.GetParameters();
+                Contract.Require(Parameters.Length == 1);
+
+                ParameterInfo ValueParameter = Parameters[0];
+                Contract.Require(ValueParameter.ParameterType == ValueType);
+
+                object CreateInstanceOfValueType()
+                {
+                    return Contract.AssertNotNull(Activator.CreateInstance(ValueType));
+                }
+
+                object DefaultValueParameter = Contract.AssertNotNull(Contract.AssertNoThrow(CreateInstanceOfValueType));
+                NullableInstance = ValueConstructorInfo.Invoke([DefaultValueParameter]);
+            }
+
+            if (NullableInstance is null)
+            {
+                return false;
+            }
+            else
+            {
+                LastInstance = NullableInstance;
+                return true;
+            }
         }
     }
 
