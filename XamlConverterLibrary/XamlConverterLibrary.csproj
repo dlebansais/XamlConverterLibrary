@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netcoreapp3.1;net481;net10.0-windows7.0</TargetFrameworks>
+        <TargetFrameworks>netcoreapp3.1;net481;net8.0-windows7.0;net10.0-windows7.0</TargetFrameworks>
         <UseWPF>true</UseWPF>
         <LangVersion>14</LangVersion>
         <Nullable>enable</Nullable>
         <Platforms>x64</Platforms>
 
         <RootNamespace>Converters</RootNamespace>
-        <Version>3.0.1</Version>
-        <AssemblyVersion>3.0.1.27</AssemblyVersion>
-        <FileVersion>3.0.1.27</FileVersion>
+        <Version>3.0.2</Version>
+        <AssemblyVersion>3.0.2.28</AssemblyVersion>
+        <FileVersion>3.0.2.28</FileVersion>
         <Authors>David Le Bansais</Authors>
         <Company />
         <Product />
@@ -63,7 +63,6 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <!-- 
         <PackageReference Include="dlebansais.IDisposableAnalyzers" Version="4.0.8.17">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -72,7 +71,6 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        -->
         <PackageReference Include="dlebansais.Method.Contracts.Analyzers-Debug" Version="2.0.6" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

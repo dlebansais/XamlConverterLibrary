@@ -1,0 +1,41 @@
+﻿namespace XamlConverterLibrary.Test;
+
+using System.Threading;
+using NUnit.Framework;
+
+[TestFixture]
+internal class TestNullToObjectConverter
+{
+    [Test]
+    [Apartment(ApartmentState.STA)]
+    public void TestConvert()
+    {
+        NullToObjectConverterTestConvertWindow Dlg = new();
+        Dlg.Show();
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(Dlg.StringPropertyNull.IsVisible, Is.False);
+            Assert.That(Dlg.StringPropertyNotNull.IsVisible, Is.True);
+            Assert.That(Dlg.IntPropertyNull.IsVisible, Is.False);
+            Assert.That(Dlg.IntPropertyNotNull.IsVisible, Is.True);
+        }
+    }
+
+    [Test]
+    [Apartment(ApartmentState.STA)]
+    public void TestConvertBack()
+    {
+        NullToObjectConverterTestConvertBackWindow Dlg = new();
+        Dlg.Show();
+        NullToObjectConverterTestClass DataContext = (NullToObjectConverterTestClass)Dlg.DataContext;
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(DataContext.StringPropertyNull, Is.Not.Null);
+            Assert.That(DataContext.StringPropertyNotNull, Is.Null);
+            Assert.That(DataContext.IntPropertyNull, Is.Not.Null);
+            Assert.That(DataContext.IntPropertyNotNull, Is.Null);
+        }
+    }
+}

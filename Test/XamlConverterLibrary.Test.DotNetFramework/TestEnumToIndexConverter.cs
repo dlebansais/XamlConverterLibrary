@@ -1,0 +1,39 @@
+﻿namespace XamlConverterLibrary.Test;
+
+using System.Threading;
+using NUnit.Framework;
+
+[TestFixture]
+internal class TestEnumToIndexConverter
+{
+    [Test]
+    [Apartment(ApartmentState.STA)]
+    public void TestConvert()
+    {
+        EnumToIndexConverterTestConvertWindow Dlg = new();
+        Dlg.Show();
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(Dlg.EnumPropertyIndexZero.SelectedIndex, Is.Zero);
+            Assert.That(Dlg.EnumPropertyIndexOne.SelectedIndex, Is.EqualTo(1));
+            Assert.That(Dlg.EnumPropertyIndexTwo.SelectedIndex, Is.EqualTo(2));
+        }
+    }
+
+    [Test]
+    [Apartment(ApartmentState.STA)]
+    public void TestConvertBack()
+    {
+        EnumToIndexConverterTestConvertBackWindow Dlg = new();
+        Dlg.Show();
+        EnumToIndexConverterTestClass DataContext = (EnumToIndexConverterTestClass)Dlg.DataContext;
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(DataContext.EnumPropertyIndexZero, Is.EqualTo(EnumToIndexConverterTestEnum.IndexOne));
+            Assert.That(DataContext.EnumPropertyIndexOne, Is.EqualTo(EnumToIndexConverterTestEnum.IndexTwo));
+            Assert.That(DataContext.EnumPropertyIndexTwo, Is.EqualTo(EnumToIndexConverterTestEnum.IndexZero));
+        }
+    }
+}
