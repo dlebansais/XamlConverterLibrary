@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netcoreapp3.1;net481;net8.0-windows7.0;net10.0-windows7.0</TargetFrameworks>
+        <TargetFrameworks>netcoreapp3.1;net481;net10.0-windows7.0</TargetFrameworks>
         <UseWPF>true</UseWPF>
         <LangVersion>14</LangVersion>
         <Nullable>enable</Nullable>
         <Platforms>x64</Platforms>
 
         <RootNamespace>Converters</RootNamespace>
-        <Version>3.0.3</Version>
-        <AssemblyVersion>3.0.3.29</AssemblyVersion>
-        <FileVersion>3.0.3.29</FileVersion>
+        <Version>4.0.0</Version>
+        <AssemblyVersion>4.0.0.30</AssemblyVersion>
+        <FileVersion>4.0.0.30</FileVersion>
         <Authors>David Le Bansais</Authors>
         <Company />
         <Product />
@@ -67,7 +67,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="dlebansais.CSharpLatest" Version="3.0.0">
+        <PackageReference Include="dlebansais.CSharpLatest" Version="3.0.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
