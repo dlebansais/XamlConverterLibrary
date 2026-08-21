@@ -1,0 +1,21 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Project Path="PreBuild/PreBuild.csproj">
+    <Platform Project="x64" />
+  </Project>
+  <Project Path="Test/XamlConverterLibrary.Test.DotNetFramework/XamlConverterLibrary.Test.DotNetFramework.csproj">
+    <Platform Project="x64" />
+  </Project>
+  <Project Path="Test/XamlConverterLibrary.Test/XamlConverterLibrary.Test.csproj">
+    <Platform Project="x64" />
+  </Project>
+  <Project Path="XamlConverterLibrary/XamlConverterLibrary.csproj">
+    <BuildDependency Project="PreBuild/PreBuild.csproj" />
+    <Platform Project="x64" />
+  </Project>
+</Solution>
